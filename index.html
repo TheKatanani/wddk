@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./styles/output.css" rel="stylesheet" />
+  <title>SushiSamba Widget</title>
+</head>
+
+<body class="min-h-screen bg-[#fff]">
+  <div id="app" class="w-full max-w-7xl mx-auto">
+    <div id="page-container" class="pb-16"></div>
+  </div>
+<!-- ====================== FOOTER ====================== -->
+    <footer class="w-full bg-[#f0f0f0] py-6 mt-16 flex justify-center">
+      <div class="flex items-center gap-3 text-sm text-gray-600">
+
+        <span>Powered by</span>
+
+        <img src="./assets/images/wedk.png" 
+             class="h-5 object-contain" />
+
+        <img src="./assets/images/sauditech.png" 
+             class="h-5 object-contain" />
+
+      </div>
+    </footer>
+
+  <!-- ====================== GLOBAL MODAL ====================== -->
+  <div id="global-modal"
+       class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[999] hidden justify-center items-center p-4">
+
+    <div id="modal-content"
+         class="bg-white rounded-2xl shadow-xl w-full max-w-[520px] p-6 relative overflow-y-auto 
+                md:rounded-2xl rounded-none md:max-h-[80vh] max-h-[100vh] md:h-auto h-screen">
+
+      <!-- Close Button -->
+      <button onclick="closeModal()"
+              class="absolute top-4 right-4 text-[20px] text-gray-700 hover:text-black">
+        ✕
+      </button>
+
+      <!-- Modal dynamic content goes here -->
+    </div>
+  </div>
+  <!-- test -->
+<div>
+  <button class="text-[13px] text-primary underline"
+        data-modal="paymentPolicy">
+  Payment Policy
+</button>
+<button class="btn-primary mt-4" data-modal="review">
+  Write a review
+</button>
+<button class="btn-secondary" data-modal="dayUnavailable">
+  Today is unavailable
+</button>
+
+<button class="btn-primary" data-modal="waitlist">
+  Join waitlist
+</button>
+<button class="text-[13px] underline" data-modal="report">
+  Report an issue
+</button>
+<button data-modal="login">Sign in</button>
+<button data-modal="notify">Notify me</button>
+<button data-modal="specialNotes">Special Notes</button>
+
+</div>
+  <!-- Only this script, as a module -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

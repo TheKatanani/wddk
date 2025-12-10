@@ -1,0 +1,183 @@
+@font-face {
+  font-family: 'HelveticaNeueW23';
+  src: url('../assets/fonts/HelveticaNeue-Reg.woff2') format('woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'HelveticaNeueW23';
+  src: url('../assets/fonts/HelveticaNeue-Bd.woff2') format('woff2');
+  font-weight: 700;
+}
+
+body {
+  @apply font-sans text-grayText bg-white;
+}
+
+.tab-active {
+  @apply text-white bg-black rounded-full px-6 py-2 transition-all duration-200;
+}
+
+.tab-inactive {
+  @apply text-black bg-grayLight rounded-full px-6 py-2 transition-all duration-200;
+}
+
+.section-fade {
+  @apply opacity-0 translate-y-2 transition-all duration-300;
+}
+
+.section-show {
+  @apply opacity-100 translate-y-0;
+}
+
+.tab-btn {
+  @apply flex items-center gap-2 px-7 py-[10px] 
+         rounded-full text-sm font-medium
+         transition-all duration-200 shadow-sm;
+}
+
+.tab-active {
+  @apply bg-[#2E2E2E] text-white shadow-md;
+}
+
+.tab-inactive {
+  @apply bg-white text-black border border-gray-300;
+}
+
+.timeslot-btn {
+  @apply bg-[#FF7A00] text-white text-[14px] font-medium px-6 py-2 rounded-md shadow-sm;
+}
+
+.dropdown-panel {
+  @apply absolute z-40 bg-white rounded-xl shadow-lg border border-gray-200 
+         p-4 opacity-0 scale-95 pointer-events-none origin-top 
+         transition-all duration-150;
+}
+
+.dropdown-panel.show {
+  @apply opacity-100 scale-100 pointer-events-auto;
+}
+
+.qty-btn {
+  @apply w-6 h-6 flex items-center justify-center rounded-md border border-gray-300 
+         text-[13px] leading-none hover:bg-gray-100;
+}
+
+.timeslot-btn {
+  @apply bg-[#FF7A00] text-white text-[14px] font-medium px-6 py-2 rounded-md 
+         shadow-sm transition-transform duration-100 active:scale-95;
+}
+
+.timeslot-active {
+  @apply ring-2 ring-white ring-offset-2 ring-offset-[#FF7A00];
+}
+
+.time-option {
+  @apply border border-gray-200 rounded-md py-1 hover:bg-gray-100;
+}
+
+.time-arrow {
+  @apply text-gray-400 text-[14px] leading-none hover:text-black cursor-pointer;
+}
+
+[data-time-col] span {
+  @apply text-black text-[20px] font-semibold;
+}
+
+.gallery-item {
+  @apply overflow-hidden rounded-xl shadow-sm;
+}
+
+.gallery-img {
+  @apply w-full h-[180px] object-cover 
+         transition-transform duration-300 ease-out;
+}
+
+.gallery-item:hover .gallery-img {
+  @apply scale-105;
+}
+
+.input-field {
+  @apply border border-gray-300 rounded-lg px-4 py-3 text-[14px] w-full outline-none focus:border-gray-400;
+}
+
+.checkbox {
+  @apply w-4 h-4 accent-[#FF7A00];
+}
+
+.price-btn {
+  @apply border border-gray-300 rounded-lg py-2 px-4 text-[14px] text-gray-700 
+         hover:bg-gray-100 transition;
+}
+
+.price-btn-active {
+  @apply bg-[#FF7A00] text-white border-[#FF7A00];
+}
+
+.toggle-btn {
+  @apply border border-gray-300 rounded-lg py-2 px-4 text-[13px] hover:bg-gray-100;
+}
+
+.toggle-btn-active {
+  @apply bg-[#FF7A00] text-white rounded-lg py-2 px-4;
+}
+
+.pay-now-btn {
+  @apply bg-[#FF7A00] text-white py-3 px-12 rounded-lg text-[15px] font-medium 
+         shadow-md hover:bg-[#e36c00] transition;
+}
+
+/* ====================== MODAL BUTTON UTILITIES ====================== */
+.btn-primary {
+  @apply bg-primary text-white py-2 rounded-xl hover:bg-primary/90 transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-gray-300 text-black py-2 rounded-xl hover:bg-gray-400 transition-colors;
+}
+
+/* ====================== MODAL ANIMATIONS ====================== */
+/* Fade-in background */
+.modal-fade {
+  animation: modalFade 0.25s ease-out forwards;
+}
+
+@keyframes modalFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Popup scale + slide animation */
+.modal-popup {
+  animation: modalPopup 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center;
+}
+
+@keyframes modalPopup {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ====================== BOOKING ITEM STYLES ====================== */
+.booking-item {
+  @apply flex flex-col items-center text-center mb-10;
+}
+
+.booking-icon {
+  @apply w-7 h-7 mb-1;
+  filter: invert(48%) sepia(85%) saturate(700%) hue-rotate(130deg);
+}
+
+.booking-label {
+  @apply text-[13px] text-gray-600 mb-[2px];
+}
+
+.booking-value {
+  @apply text-[16px] font-medium text-gray-900;
+}
