@@ -1,3 +1,4 @@
+import { supLoadPage } from "../router.js";
 import { ReservationState } from "../state.js";
 import { BookingDetailsCard } from "./bookingDetails.js";
 
@@ -65,7 +66,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <button class="bg-primary text-white rounded-full py-3 mt-4 shadow">
+          <button id="pay-now-btn" class="bg-primary text-white rounded-full py-3 mt-4 shadow">
             Pay Now
           </button>
         </div>
@@ -132,4 +133,14 @@ export function populateBookingSummary() {
 export function init() {
     initCheckoutTimer();
     populateBookingSummary();
+
+    // Add Pay Now button click handler
+    const payNowBtn = document.getElementById("pay-now-btn");
+    if (payNowBtn) {
+        payNowBtn.addEventListener("click", () => {
+            // Navigate to confirmation page
+            console.log("clicked-button!")
+            supLoadPage('confirmation');
+        });
+    }
 }
