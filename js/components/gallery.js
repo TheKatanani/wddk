@@ -1,5 +1,5 @@
 export default function Gallery() {
-  return `
+  return /*html*/`
     <div class="w-full flex flex-col gap-10">
 
       <!-- GALLERY GRID -->
@@ -66,7 +66,7 @@ export default function Gallery() {
 }
 
 function renderReview(name, date) {
-  return `
+  return /*html*/`
     <div class="bg-[#F5F5F5] rounded-xl p-4 flex flex-col gap-1 text-[13px] text-gray-700">
       <div class="flex justify-between items-center mb-1">
         <span class="font-semibold">${name}</span>

@@ -1,91 +1,24 @@
+import Header from "./Header.js";
+
 export default function Layout(contentHtml, activePage = "reservation") {
-  return `
+  return /*html*/`
   <div class="w-full flex flex-col">
 
-    <!-- ====================== TOP HEADER ====================== -->
-    <header class="w-full flex justify-between items-center py-2 px-6">
-      <!-- Left orange icon -->
-      <img src="./assets/icons/back.svg" class="w-8 h-8 cursor-pointer" />
+    ${Header()}
 
-      <!-- Centered Logo -->
-      <div class="flex flex-col items-center py-4">
-        <img src="./assets/icons/logo.svg" class="h-12" />
-        <span class="tracking-widest text-[11px] text-primary mt-[2px]">RIYADH</span>
-      </div>
+    ${HeroWithNavigation(activePage)}
 
-      <!-- Right empty (for future use) -->
-      <div class="w-8 h-8"></div>
-    </header>
+    <!-- MAIN CONTENT -->
+    <main class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 px-6 mt-16">
 
-    <!-- ====================== HERO ====================== -->
-    <div class="w-full px-6 relative pb-16">
-
-      <!-- HERO IMAGE -->
-      <div class="  rounded-3xl shadow-sm relative">
-        <img 
-          src="./assets/images/hero.png" 
-          class="w-full h-[280px] md:h-[360px] object-cover rounded-3xl"
-        />
-
-        <!-- CURVE IMAGE - ABSOLUTE AT BOTTOM -->
-        <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[80%] mx-auto z-10">
-          <img 
-            src="./assets/images/curve.png" 
-            class="w-full block pointer-events-none select-none"
-          />
-        </div>
-
-        <!-- NAVIGATION TABS OVER CURVE - ABSOLUTE -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 
-                    -bottom-2 flex gap-8 z-20">
-
-          <button 
-            data-page="reservation"
-            class="tab-btn ${activePage === "reservation" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-calendar.svg" class="w-4 h-4 ${activePage === "reservation"
-      ? "brightness-0 invert"
-      : "brightness-0"
-    }" />
-            Reservation
-          </button>
-
-          <button 
-            data-page="gallery"
-            class="tab-btn ${activePage === "gallery" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-gallery.svg" class="w-4 h-4 ${activePage === "gallery" ? "brightness-0 invert" : "brightness-0"
-    }" />
-            Gallery
-          </button>
-
-          <button 
-            data-page="giftcard"
-            class="tab-btn ${activePage === "giftcard" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-gift.svg" class="w-4 h-4 ${activePage === "giftcard" ? "brightness-0 invert" : "brightness-0"
-    }" />
-            Gift Card
-          </button>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ====================== MAIN CONTENT + SIDEBAR ====================== -->
-    <main class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 px-6">
-
-      <!-- LEFT: Dynamic content -->
+      <!-- LEFT -->
       <div id="dynamic-page">
         ${contentHtml}
       </div>
 
-      <!-- RIGHT: Shared Sidebar -->
-     <!-- RIGHT SIDEBAR -->
-<aside class="flex flex-col gap-10">
-
-  <!-- Restaurant Title + Info Icons -->
+      <!-- RIGHT SIDEBAR -->
+      <aside class="hidden lg:flex flex-col gap-10">
+          <!-- Restaurant Title + Info Icons -->
   <div>
     <h2 class="text-[22px] font-semibold text-black mb-1">SUSHISAMBA</h2>
 
@@ -134,10 +67,18 @@ export default function Layout(contentHtml, activePage = "reservation") {
 
   <!-- Social Icons -->
   <div class="flex gap-4 items-center">
-    <img src="./assets/icons/social-instagram.svg" class="w-5 h-5">
-    <img src="./assets/icons/social-facebook.svg" class="w-5 h-5">
-    <img src="./assets/icons/social-tiktok.svg" class="w-5 h-5">
-    <img src="./assets/icons/social-x.svg" class="w-5 h-5">
+    <a href="#" class="cursor-pointer">
+      <img src="./assets/icons/social-instagram.svg" class="w-6 h-6">
+    </a>
+    <a href="#" class="cursor-pointer">
+      <img src="./assets/icons/social-facebook.svg" class="w-6 h-6">
+    </a>
+    <a href="#" class="cursor-pointer">
+      <img src="./assets/icons/social-tiktok.svg" class="w-6 h-6">
+    </a>
+    <a href="#" class="cursor-pointer">
+      <img src="./assets/icons/social-x.svg" class="w-6 h-6">
+    </a>
   </div>
 
   <!-- Opening Hours -->
@@ -162,11 +103,78 @@ export default function Layout(contentHtml, activePage = "reservation") {
   <a href="#" class="text-[13px] text-primary underline block">
     Al Motassem Street, Riyadh, 12212
   </a>
-
-</aside>
+      </aside>
 
     </main>
 
-  </div> 
+  </div>
+  `;
+}
+
+function HeroWithNavigation(activePage) {
+  return /*html*/`
+  <section class="relative px-6">
+
+    <!-- HERO IMAGE -->
+    <div class="relative rounded-3xl overflow-hidden shadow-sm">
+      <img 
+        src="./assets/images/hero.webp"
+        class="w-full h-[260px] md:h-[360px] object-cover"
+      /> 
+      <!-- CURVE -->
+      <img 
+        src="./assets/images/curve.png"
+        class="absolute -bottom-4 sm:-bottom-5 md:-bottom-8 sm:scale-y-125 md:scale-y-150 h-[40px] md:h-[70px] lg:-bottom-11 left-1/2 -translate-x-1/2 w-full sm:w-[90%]  lg:w-[80%] pointer-events-none select-none z-10"
+      />
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="absolute left-1/2 -translate-x-1/2 w-[80%] sm:w-[70%] md:w-[60%]  -bottom-4 sm:-bottom-6 z-20">
+      <div class="bg-white rounded-full  flex gap-1 sm:gap-2 lg:gap-10 justify-center px-2 sm:px-4 py-1 sm:py-2">
+
+        ${NavButton(
+    "reservation",
+    "Reservation",
+    "./assets/icons/nav-calendar.svg",
+    activePage
+  )}
+        ${NavButton(
+    "gallery",
+    "Gallery",
+    "./assets/icons/nav-gallery.svg",
+    activePage
+  )}
+        ${NavButton(
+    "giftcard",
+    "Gift Card",
+    "./assets/icons/nav-gift.svg",
+    activePage
+  )}
+
+      </div>
+    </div>
+
+  </section>
+  `;
+}
+
+function NavButton(page, label, icon, activePage) {
+  const isActive = activePage === page;
+  return /*html*/`
+    <button 
+      data-page="${page}"
+      class="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-full text-xs sm:text-sm transition
+        ${isActive
+      ? "bg-[#333333] text-white"
+      : "text-gray-700 hover:bg-gray-100"
+    }
+      "
+    >
+      <img 
+        src="${icon}" 
+        class="w-4 h-4 ${isActive ? "brightness-0 invert" : ""}"
+      />
+      ${label}
+    </button>
   `;
 }

@@ -40,43 +40,806 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+.gitignore
 assets/icons/applePay.svg
+assets/icons/area.svg
 assets/icons/back.svg
 assets/icons/bow.svg
+assets/icons/check-white.svg
 assets/icons/chevron-down.svg
+assets/icons/date.svg
+assets/icons/guest.svg
+assets/icons/guests.svg
 assets/icons/info-available.svg
 assets/icons/info-formal.svg
 assets/icons/info-japanese.svg
 assets/icons/info-price.svg
+assets/icons/location.svg
 assets/icons/logo.svg
 assets/icons/mada_visa_masterCard.svg
 assets/icons/nav-calendar.svg
 assets/icons/nav-gallery.svg
 assets/icons/nav-gift.svg
+assets/icons/pinMap.svg
+assets/icons/print.svg
 assets/icons/review.svg
+assets/icons/seating.svg
+assets/icons/share.svg
 assets/icons/social-facebook.svg
 assets/icons/social-instagram.svg
 assets/icons/social-tiktok.svg
 assets/icons/social-x.svg
+assets/icons/time.svg
 index.html
+js/components/bookingDetails.js
+js/components/bookingDetailsComparison.js
+js/components/checkout.js
+js/components/confirmation.js
 js/components/gallery.js
 js/components/giftcard.js
+js/components/Header.js
 js/components/layout.js
 js/components/modal.js
+js/components/modify.js
+js/components/modifyCheckout.js
 js/components/reservation.js
+js/components/subLayout.js
 js/main.js
 js/router.js
+js/state.js
 package.json
 README.md
 styles/global.css
 styles/main-input.css
-styles/output.css
 styles/tailwind.css
 tailwind.config.js
+test-booking.html
 </directory_structure>
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path="assets/icons/guests.svg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 272 345" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-121245.321077,-64653.306398)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1513.7871,1379.22)">
+                <path d="M0,-12.433C-3.428,-12.433 -6.217,-9.644 -6.217,-6.216C-6.217,-2.788 -3.428,0 0,0C3.428,0 6.216,-2.788 6.216,-6.216C6.216,-9.644 3.428,-12.433 0,-12.433M0,2.856C-5.003,2.856 -9.073,-1.214 -9.073,-6.216C-9.073,-11.219 -5.003,-15.289 0,-15.289C5.002,-15.289 9.072,-11.219 9.072,-6.216C9.072,-1.214 5.002,2.856 0,2.856" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1514.0614,1402.4311)">
+                <path d="M0,-15.895C-7.395,-15.895 -13.41,-9.879 -13.41,-2.486C-13.41,-1.115 -12.295,-0 -10.924,-0L10.925,-0C12.295,-0 13.41,-1.115 13.41,-2.486C13.41,-9.879 7.395,-15.895 0,-15.895M10.925,2.856L-10.924,2.856C-13.87,2.856 -16.266,0.46 -16.266,-2.486C-16.266,-11.455 -8.969,-18.751 0,-18.751C8.969,-18.751 16.266,-11.455 16.266,-2.486C16.266,0.46 13.87,2.856 10.925,2.856" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
+</file>
+
+<file path="assets/icons/pinMap.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+  <circle cx="12" cy="10" r="3"></circle>
+</svg>
+</file>
+
+<file path="js/components/bookingDetailsComparison.js">
+// js/components/bookingDetailsComparison.js
+
+/**
+ * Pixel-perfect Booking Comparison (New vs Old)
+ * With dual icons + dual values exactly like your screenshot
+ */
+export function BookingDetailsComparisonCard(oldData, newData) {
+    return `
+    <div class="relative bg-white rounded-xl border border-gray-200 
+                shadow-[0_4px_20px_rgba(0,0,0,0.08)]
+                w-full max-w-[300px] mx-auto pt-6 pb-12 px-6 flex flex-col items-center">
+
+      <!-- Title -->
+      <h2 class="text-[18px] font-semibold text-center tracking-wide">Booking Details</h2>
+      <div class="w-12 mx-auto h-[1px] bg-gray-300/60 mt-2 mb-4"></div>
+
+      <!-- Timer -->
+      <div class="text-center mb-10">
+        <div id="timer-countdown" class="text-[24px] font-semibold text-gray-900">
+          2:47
+        </div>
+        <div class="text-[12px] text-gray-500 mt-[2px]">Remaining Time</div>
+      </div>
+
+      <!-- Rows -->
+      ${renderRow("Guests", newData.guests, oldData.guests, "./assets/icons/guests.svg")}
+      ${renderRow("Date", newData.date, oldData.date, "./assets/icons/date.svg")}
+      ${renderRow("Time", newData.timeSlot, oldData.timeSlot, "./assets/icons/time.svg")}
+      ${renderRow("Area", newData.area, oldData.area, "./assets/icons/area.svg")}
+      ${renderRow("Seating", newData.seating, oldData.seating, "./assets/icons/seating.svg")}
+
+      <!-- Zig-Zag Bottom -->
+      <div class="absolute -bottom-5 left-0 w-full overflow-hidden">
+        <svg class="w-full h-5" viewBox="0 0 100 6" preserveAspectRatio="none">
+          <path 
+            d="M0 0 L5 6 L10 0 L15 6 L20 0 L25 6 L30 0 L35 6 L40 0 L45 6 
+               L50 0 L55 6 L60 0 L65 6 L70 0 L75 6 L80 0 L85 6 L90 0 L95 6 L100 0"
+            fill="white" stroke="#e5e7eb" stroke-width="0.4" />
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
+
+/**
+ * Render one row (Two columns, Two icons)
+ * LEFT column → NEW (orange)
+ * RIGHT column → OLD (faded)
+ */
+function renderRow(label, newValue, oldValue, iconSrc) {
+    return `
+    <div class="w-full grid grid-cols-2 gap-6 mb-8">
+
+      <!-- LEFT COLUMN (NEW) -->
+      <div class="flex flex-col items-center text-center">
+        <!-- New Icon -->
+        <img src="${iconSrc}" 
+             class="w-6 h-6 mb-1"
+             style="filter: saturate(1.7) brightness(1.2);" />
+        <p class="text-[12px] text-gray-700">${label}</p>
+        <p class="text-primary text-[14px] font-semibold mt-1">${newValue}</p>
+      </div>
+
+      <!-- RIGHT COLUMN (OLD) -->
+      <div class="flex flex-col items-center text-center opacity-40">
+        <!-- Old (Faded) Icon -->
+        <img src="${iconSrc}" class="w-6 h-6 mb-1" style="opacity:0.4;" />
+        <p class="text-[12px] text-gray-500">${label}</p>
+        <p class="text-[14px] text-gray-500 mt-1">${oldValue}</p>
+      </div>
+
+    </div>
+  `;
+}
+</file>
+
+<file path="js/components/Header.js">
+export default function Header() {
+    return `
+    <header class="w-full flex items-center justify-between px-6 py-3">
+      
+      <!-- Back icon -->
+      <img 
+        src="./assets/icons/back.svg" 
+        class="w-8 h-8 cursor-pointer"
+        onclick="history.back()"
+      />
+
+      <!-- Logo -->
+      <div class="flex flex-col items-center">
+        <img src="./assets/icons/logo.svg" class="h-12" />
+      </div>
+
+      <!-- Location dropdown placeholder -->
+      <div class="relative">
+        <button class="flex items-center gap-1 text-sm">
+          <img src="./assets/icons/location.svg" class="w-4 h-4" />
+          Riyadh
+        </button>
+      </div>
+
+    </header>
+  `;
+}
+</file>
+
+<file path="js/components/modify.js">
+import { ReservationState, updateState } from "../state.js";
+import { supLoadPage } from "../router.js";
+
+export default function ModifyPage() {
+    return `
+  <div class="w-full flex flex-col gap-10">
+
+    <!-- Header -->
+    <div class="flex items-center gap-3">
+      <img src="./assets/icons/back.svg" onclick="history.back()" class="w-7 h-7 cursor-pointer" />
+      <h1 class="text-xl font-semibold">Modify Reservation</h1>
+    </div>
+
+    <!-- ====================== DROPDOWNS ====================== -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <!-- Guests -->
+      <div class="relative">
+        <div 
+          class="border border-gray-300 rounded-xl p-4 flex flex-col text-[13px] cursor-pointer"
+          data-dropdown="guests"
+        >
+          <label class="text-gray-600 mb-1">Guests</label>
+          <div class="flex justify-between items-center text-[15px] font-medium">
+            <span id="guests-value">${ReservationState.guests || 2}</span>
+            <img src="./assets/icons/chevron-down.svg" class="w-4 h-4" />
+          </div>
+        </div>
+
+        <!-- Guests Popup -->
+        <div 
+          class="dropdown-panel mt-2"
+          data-panel="guests"
+        >
+          <div class="flex justify-between items-center mb-3">
+            <span class="text-[13px] text-gray-700">Guests</span>
+            <div class="flex items-center gap-2">
+              <button class="qty-btn" data-action="dec-guests">-</button>
+              <span id="guests-count" class="w-6 text-center text-[14px]">${ReservationState.guests || 2}</span>
+              <button class="qty-btn" data-action="inc-guests">+</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center">
+            <span class="text-[13px] text-gray-700">Child</span>
+            <div class="flex items-center gap-2">
+              <button class="qty-btn" data-action="dec-children">-</button>
+              <span id="children-count" class="w-6 text-center text-[14px]">${ReservationState.children || 0}</span>
+              <button class="qty-btn" data-action="inc-children">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Time -->
+      <div class="relative">
+        <div 
+          class="border border-gray-300 rounded-xl p-4 flex flex-col text-[13px] cursor-pointer"
+          data-dropdown="time"
+        >
+          <label class="text-gray-600 mb-1">Time</label>
+          <div class="flex justify-between items-center text-[15px] font-medium">
+            <span id="time-value">${ReservationState.time || '3:00 PM'}</span>
+            <img src="./assets/icons/chevron-down.svg" class="w-4 h-4" />
+          </div>
+        </div>
+
+        <!-- TIME PICKER POPUP -->
+        <div 
+          class="dropdown-panel mt-2 min-w-[260px] p-4 flex justify-center"
+          data-panel="time"
+        >
+          <div class="flex items-center justify-between w-full text-[20px] font-medium select-none">
+
+            <!-- Hours -->
+            <div class="flex flex-col items-center mx-2" data-time-col="hour">
+              <button class="time-arrow" data-time-up="hour">▲</button>
+              <span id="time-hour">3</span>
+              <button class="time-arrow" data-time-down="hour">▼</button>
+            </div>
+
+            <!-- Colon -->
+            <span class="text-[#FF7A00] mx-1 text-[22px]">:</span>
+
+            <!-- Minutes -->
+            <div class="flex flex-col items-center mx-2" data-time-col="minute">
+              <button class="time-arrow" data-time-up="minute">▲</button>
+              <span id="time-minute">00</span>
+              <button class="time-arrow" data-time-down="minute">▼</button>
+            </div>
+
+            <!-- Period -->
+            <div class="flex flex-col items-center mx-2" data-time-col="period">
+              <button class="time-arrow" data-time-up="period">▲</button>
+              <span id="time-period">PM</span>
+              <button class="time-arrow" data-time-down="period">▼</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="relative">
+        <div 
+          class="border border-gray-300 rounded-xl p-4 flex flex-col text-[13px] cursor-pointer"
+          data-dropdown="date"
+        >
+          <label class="text-gray-600 mb-1">Date</label>
+          <div class="flex justify-between items-center text-[15px] font-medium">
+            <span id="date-value"></span>
+            <img src="./assets/icons/chevron-down.svg" class="w-4 h-4" />
+          </div>
+        </div>
+
+        <!-- Calendar Popup -->
+        <div 
+          class="dropdown-panel mt-2 min-w-[260px]"
+          data-panel="date"
+        >
+          <div class="flex items-center justify-between mb-3 text-[14px]">
+            <button class="px-1" data-cal-prev>&lt;</button>
+            <span id="cal-month-label" class="font-medium"></span>
+            <button class="px-1" data-cal-next>&gt;</button>
+          </div>
+
+          <div class="grid grid-cols-7 text-[11px] text-gray-500 mb-1">
+            <span>Sun</span><span>Mon</span><span>Tue</span>
+            <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+
+          <div id="cal-grid" class="grid grid-cols-7 gap-1 text-[12px]"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================== TIMESLOTS ====================== -->
+    <div class="flex flex-col gap-3">
+      <p class="text-[14px] text-gray-600">Select a new time slot:</p>
+
+      <div class="flex flex-wrap gap-2">
+        <button class="timeslot-btn" data-slot="1:30 PM">1:30 PM</button>
+        <button class="timeslot-btn" data-slot="2:00 PM">2:00 PM</button>
+        <button class="timeslot-btn" data-slot="2:30 PM">2:30 PM</button>
+        <button class="timeslot-btn" data-slot="3:00 PM">3:00 PM</button>
+        <button class="timeslot-btn" data-slot="3:30 PM">3:30 PM</button>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button class="timeslot-btn" data-slot="4:00 PM">4:00 PM</button>
+        <button class="timeslot-btn" data-slot="4:30 PM">4:30 PM</button>
+        <button class="timeslot-btn" data-slot="5:00 PM">5:00 PM</button>
+        <button class="timeslot-btn" data-slot="5:30 PM">5:30 PM</button>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button class="timeslot-btn" data-slot="6:00 PM">6:00 PM</button>
+        <button class="timeslot-btn" data-slot="6:30 PM">6:30 PM</button>
+        <button class="timeslot-btn" data-slot="7:00 PM">7:00 PM</button>
+        <button class="timeslot-btn" data-slot="7:30 PM">7:30 PM</button>
+        <button class="timeslot-btn" data-slot="8:00 PM">8:00 PM</button>
+      </div>
+    </div>
+
+  </div>
+  `;
+}
+
+// Initialize modify page (reuse reservation logic)
+export function init() {
+    setupDropdowns();
+    setupCalendar();
+    setupTimeslots();
+}
+
+// Import and reuse the same logic from reservation.js
+function setupDropdowns() {
+    const state = {
+        guests: ReservationState.guests ?? 2,
+        children: ReservationState.children ?? 0,
+        time: ReservationState.time ?? "3:00 PM",
+    };
+
+    const dropdownTriggers = document.querySelectorAll("[data-dropdown]");
+    const panels = document.querySelectorAll(".dropdown-panel");
+
+    function closeAll() {
+        panels.forEach((p) => p.classList.remove("show"));
+    }
+
+    dropdownTriggers.forEach((trigger) => {
+        trigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const type = trigger.dataset.dropdown;
+            const panel = document.querySelector(`[data-panel="${type}"]`);
+            if (!panel) return;
+
+            const isOpen = panel.classList.contains("show");
+            closeAll();
+            if (!isOpen) panel.classList.add("show");
+        });
+    });
+
+    document.addEventListener("click", () => closeAll());
+
+    // Guests logic
+    const guestsValue = document.getElementById("guests-value");
+    const guestsCount = document.getElementById("guests-count");
+    const childrenCount = document.getElementById("children-count");
+
+    function updateGuestsUI() {
+        guestsCount.textContent = state.guests;
+        childrenCount.textContent = state.children;
+        guestsValue.textContent = state.guests;
+        updateState("guests", state.guests);
+        updateState("children", state.children);
+    }
+
+    document.querySelectorAll(".qty-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const action = btn.dataset.action;
+            if (action === "inc-guests") state.guests++;
+            if (action === "dec-guests") state.guests = Math.max(1, state.guests - 1);
+            if (action === "inc-children") state.children++;
+            if (action === "dec-children") state.children = Math.max(0, state.children - 1);
+            updateGuestsUI();
+        });
+    });
+
+    updateGuestsUI();
+
+    // Time picker logic
+    const hourEl = document.getElementById("time-hour");
+    const minuteEl = document.getElementById("time-minute");
+    const periodEl = document.getElementById("time-period");
+    const timeValueEl = document.getElementById("time-value");
+
+    function parseTimeString(value) {
+        const match = value.match(/^(\d{1,2}):(\d{2})\s?(AM|PM)$/i);
+        if (!match) return { hour: 3, minute: 0, period: "PM" };
+        const [, h, m, p] = match;
+        return {
+            hour: Math.min(Math.max(parseInt(h, 10), 1), 12),
+            minute: Math.min(Math.max(parseInt(m, 10), 0), 59),
+            period: p.toUpperCase() === "AM" ? "AM" : "PM",
+        };
+    }
+
+    const parsedTime = parseTimeString(state.time);
+    let hour = parsedTime.hour;
+    let minute = parsedTime.minute;
+    let period = parsedTime.period;
+
+    function updateTimeUI() {
+        hourEl.textContent = hour;
+        minuteEl.textContent = minute.toString().padStart(2, "0");
+        periodEl.textContent = period;
+        const finalTime = `${hour}:${minuteEl.textContent} ${period}`;
+        state.time = finalTime;
+        timeValueEl.textContent = finalTime;
+        updateState("time", finalTime);
+    }
+
+    document.querySelectorAll("[data-time-up]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const type = btn.dataset.timeUp;
+            if (type === "hour") hour = hour === 12 ? 1 : hour + 1;
+            else if (type === "minute") minute = (minute + 1) % 60;
+            else if (type === "period") period = period === "AM" ? "PM" : "AM";
+            updateTimeUI();
+        });
+    });
+
+    document.querySelectorAll("[data-time-down]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const type = btn.dataset.timeDown;
+            if (type === "hour") hour = hour === 1 ? 12 : hour - 1;
+            else if (type === "minute") minute = minute === 0 ? 59 : minute - 1;
+            else if (type === "period") period = period === "AM" ? "PM" : "AM";
+            updateTimeUI();
+        });
+    });
+
+    updateTimeUI();
+}
+
+function setupCalendar() {
+    const dateSpan = document.getElementById("date-value");
+    const monthLabel = document.getElementById("cal-month-label");
+    const grid = document.getElementById("cal-grid");
+    if (!dateSpan || !monthLabel || !grid) return;
+
+    const today = new Date();
+    const savedDate = ReservationState.date ? new Date(ReservationState.date) : null;
+    const initialDate = savedDate && !isNaN(savedDate) ? savedDate : today;
+
+    let current = new Date(initialDate);
+    let selected = new Date(initialDate);
+
+    function formatDisplayDate(date) {
+        const opts = { month: "short", day: "numeric", year: "2-digit" };
+        return date.toLocaleDateString("en-US", opts).replace(",", "");
+    }
+
+    function renderCalendar() {
+        const year = current.getFullYear();
+        const month = current.getMonth();
+        const monthName = current.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+        monthLabel.textContent = monthName;
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        grid.innerHTML = "";
+
+        for (let i = 0; i < firstDay; i++) {
+            grid.innerHTML += `<span></span>`;
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateObj = new Date(year, month, d);
+            const isSelected = dateObj.toDateString() === selected.toDateString();
+
+            grid.innerHTML += `
+        <button 
+          class="h-7 w-7 rounded-full text-[12px] ${isSelected ? "bg-[#FF7A00] text-white" : "hover:bg-gray-100"}"
+          data-day="${d}"
+        >
+          ${d}
+        </button>
+      `;
+        }
+
+        grid.querySelectorAll("button[data-day]").forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const day = parseInt(btn.dataset.day, 10);
+                selected = new Date(year, month, day);
+                dateSpan.textContent = formatDisplayDate(selected);
+                updateState("date", selected.toISOString());
+                renderCalendar();
+                const panel = document.querySelector('[data-panel="date"]');
+                panel && panel.classList.remove("show");
+            });
+        });
+    }
+
+    dateSpan.textContent = formatDisplayDate(selected);
+    updateState("date", selected.toISOString());
+    renderCalendar();
+
+    const prevBtn = document.querySelector("[data-cal-prev]");
+    const nextBtn = document.querySelector("[data-cal-next]");
+
+    prevBtn && prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        current.setMonth(current.getMonth() - 1);
+        renderCalendar();
+    });
+
+    nextBtn && nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        current.setMonth(current.getMonth() + 1);
+        renderCalendar();
+    });
+}
+
+function setupTimeslots() {
+    const slots = document.querySelectorAll(".timeslot-btn");
+    let activeButton = null;
+
+    slots.forEach((btn) => {
+        const disabled = btn.dataset.disabled === "true";
+        if (disabled) {
+            btn.classList.add("cursor-not-allowed", "opacity-80");
+            return;
+        }
+
+        if (ReservationState.timeSlot && ReservationState.timeSlot === btn.dataset.slot) {
+            btn.classList.add("timeslot-active");
+            activeButton = btn;
+        }
+
+        btn.addEventListener("click", () => {
+            if (activeButton) {
+                activeButton.classList.remove("timeslot-active");
+            }
+
+            activeButton = btn;
+            btn.classList.add("timeslot-active");
+
+            const slot = btn.dataset.slot;
+            updateState("timeSlot", slot);
+
+            // Navigate to modify checkout page
+            supLoadPage("modifyCheckout");
+        });
+    });
+}
+</file>
+
+<file path="js/components/modifyCheckout.js">
+import { supLoadPage } from "../router.js";
+import { ReservationState } from "../state.js";
+import { BookingDetailsComparisonCard } from "./bookingDetailsComparison.js";
+
+export default function ModifyCheckoutPage() {
+  // Format date as "15 Oct"
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", { day: "numeric", month: "short" });
+  };
+
+  const oldData = {
+    guests: ReservationState.oldReservation?.guests || 2,
+    date: formatDate(ReservationState.oldReservation?.date),
+    timeSlot: ReservationState.oldReservation?.timeSlot || "N/A",
+    area: "Restaurant",
+    seating: "2 hr"
+  };
+
+  const newData = {
+    guests: ReservationState.guests || 2,
+    date: formatDate(ReservationState.date),
+    timeSlot: ReservationState.timeSlot || "N/A",
+    area: "Restaurant",
+    seating: "2 hr"
+  };
+
+  return `
+    <div class="w-full flex flex-col gap-10 px-6">
+
+      <!-- HEADER -->
+      <div class="flex items-center gap-3 mt-4">
+        <img src="./assets/icons/back.svg" onclick="navigate('modify')" class="w-7 h-7 cursor-pointer" />
+        <h1 class="text-xl font-semibold">Review Changes</h1>
+      </div>
+
+      <!-- TWO COLUMN LAYOUT -->
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_330px] gap-8">
+
+        <!-- LEFT: Guest Info Form -->
+        <div class="flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">SUSHISAMBA</h2>
+
+          <div class="flex items-center gap-3">
+            <img src="./assets/icons/info-japanese.svg" class="w-4 h-4" /> Japanese
+            <img src="./assets/icons/info-available.svg" class="w-4 h-4" /> Available
+            <img src="./assets/icons/info-formal.svg" class="w-4 h-4" /> Formal
+            <img src="./assets/icons/info-price.svg" class="w-4 h-4" /> $$$
+          </div>
+
+          <!-- INPUTS (same as checkout) -->
+          <input class="input-field" placeholder="First name" />
+          <input class="input-field" placeholder="Last name" />
+
+          <div class="flex gap-2">
+            <select class="input-field w-[110px]">
+              <option>+966</option>
+            </select>
+            <input class="input-field flex-1" placeholder="Phone Number" />
+          </div>
+
+          <input class="input-field" placeholder="Email" />
+
+          <!-- PAYMENT SUMMARY -->
+          <div class="mt-4">
+            <h3 class="font-semibold mb-2">Modification Summary</h3>
+
+            <div class="flex justify-between text-[14px] mb-1">
+              <span>Modification Fee</span>
+              <span>0 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /></span>
+            </div>
+
+            <div class="flex justify-between font-semibold mt-2">
+              <span>Total Payment</span>
+              <span>0 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /></span>
+            </div>
+          </div>
+
+          <button id="confirm-modify-btn"
+                  class="bg-primary text-white rounded-full py-3 mt-4 shadow">
+            Confirm Changes
+          </button>
+        </div>
+
+        <!-- RIGHT: Booking Details Comparison -->
+        ${BookingDetailsComparisonCard(oldData, newData)}
+      </div>
+    </div>
+  `;
+}
+
+// ---------------- Timer Logic (same as checkout) ----------------
+
+export function initModifyCheckoutTimer() {
+  let timeLeft = 180; // seconds (3:00)
+
+  const el = document.getElementById("timer-countdown");
+  if (!el) return;
+
+  function update() {
+    const min = Math.floor(timeLeft / 60);
+    const sec = timeLeft % 60;
+
+    el.textContent = `${min}:${sec.toString().padStart(2, "0")}`;
+
+    if (timeLeft <= 0) {
+      el.textContent = "Expired";
+      el.classList.add("text-red-500");
+      clearInterval(int);
+      return;
+    }
+
+    timeLeft--;
+  }
+
+  update();
+  const int = setInterval(update, 1000);
+}
+
+// ---------------- Bind + Buttons ----------------
+
+export function init() {
+  initModifyCheckoutTimer();
+
+  // Confirm Change
+  const btn = document.getElementById("confirm-modify-btn");
+  if (btn) {
+    btn.addEventListener("click", () => {
+      // Navigate to confirmation page with NEW data
+      supLoadPage('confirmation');
+    });
+  }
+}
+</file>
+
+<file path="test-booking.html">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./styles/output.css" rel="stylesheet" />
+    <title>Booking Details Test</title>
+  </head>
+
+  <body class="min-h-screen bg-gray-100 flex items-center justify-center p-8">
+    <div id="test-container"></div>
+
+    <script type="module">
+      import {
+        createBookingDetailsCard,
+        updateBookingDetails,
+      } from "./js/components/bookingDetails.js";
+
+      // Create and append the booking details card
+      const container = document.getElementById("test-container");
+      const card = createBookingDetailsCard();
+      container.appendChild(card);
+
+      // Test updating values
+      setTimeout(() => {
+        updateBookingDetails({
+          guests: 4,
+          date: "20 Dec",
+          time: "7:30 PM",
+        });
+      }, 2000);
+    </script>
+  </body>
+</html>
+</file>
+
+<file path=".gitignore">
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Tailwind output (can be regenerated)
+styles/output.css
+</file>
 
 <file path="assets/icons/applePay.svg">
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -92,6 +855,20 @@ This section contains the contents of the repository's files.
     <defs>
         <image id="_Image1" width="229px" height="97px" xlink:href="data:image/png;base64,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"/>
     </defs>
+</svg>
+</file>
+
+<file path="assets/icons/area.svg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 185 427" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-121303.974411,-68983.623065)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1509.0398,1908.628)">
+                <path d="M0,1.031L-0.063,-5.496C1.07,-4.87 2.374,-4.517 3.759,-4.526L9.354,-4.564C11.786,-4.58 13.778,-2.614 13.795,-0.182L13.804,1.182L0,1.031ZM-4.01,0.987L-3.971,4.998L-3.79,26.082L0.239,26.082L0.039,5.042L13.83,5.192L13.969,26.09L17.979,26.09L17.84,5.235L17.813,1.225L17.802,-0.514C17.774,-4.83 14.238,-8.318 9.922,-8.289L4.343,-8.253C1.912,-8.236 -0.08,-10.202 -0.097,-12.633L-0.175,-24.467L-4.206,-25.059L-4.01,0.987Z" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
 </svg>
 </file>
 
@@ -146,6 +923,12 @@ This section contains the contents of the repository's files.
 </svg>
 </file>
 
+<file path="assets/icons/check-white.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" stroke="none">
+  <path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
+</file>
+
 <file path="assets/icons/chevron-down.svg">
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -157,6 +940,29 @@ This section contains the contents of the repository's files.
             </g>
         </g>
     </g>
+</svg>
+</file>
+
+<file path="assets/icons/date.svg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 294 276" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-121233.905244,-66109.819731)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1499.3585,1541.5896)">
+                <path d="M0,27.281L-0.019,12.409L29.349,12.409L29.368,27.243L0,27.281ZM-0.037,4.362L3.779,4.362L3.779,6.166C3.779,6.975 4.437,7.633 5.246,7.633C6.054,7.633 6.712,6.975 6.712,6.166L6.712,4.362L22.656,4.324L22.656,6.204C22.656,7.013 23.314,7.671 24.123,7.671C24.931,7.671 25.589,7.013 25.589,6.204L25.589,4.324L29.331,4.324L29.331,9.495L-0.037,9.495L-0.037,4.362ZM29.368,1.429L25.589,1.429L25.589,-1.392C25.589,-2.2 24.931,-2.839 24.123,-2.839C23.314,-2.839 22.656,-2.2 22.656,-1.392L22.656,1.429L6.712,1.429L6.712,-1.411C6.712,-2.219 6.054,-2.877 5.246,-2.877C4.437,-2.877 3.779,-2.219 3.779,-1.411L3.779,1.429L-0.037,1.429C-1.636,1.429 -2.933,2.726 -2.933,4.324L-2.933,27.281C-2.933,28.86 -1.636,30.158 -0.037,30.158L29.368,30.158C30.967,30.158 32.264,28.86 32.264,27.281L32.264,4.324C32.264,2.726 30.967,1.429 29.368,1.429" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
+</file>
+
+<file path="assets/icons/guest.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+  <circle cx="9" cy="7" r="4"></circle>
+  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
 </svg>
 </file>
 
@@ -228,6 +1034,13 @@ This section contains the contents of the repository's files.
             </g>
         </g>
     </g>
+</svg>
+</file>
+
+<file path="assets/icons/location.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+  <circle cx="12" cy="10" r="3"></circle>
 </svg>
 </file>
 
@@ -337,6 +1150,14 @@ This section contains the contents of the repository's files.
 </svg>
 </file>
 
+<file path="assets/icons/print.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="6 9 6 2 18 2 18 9"></polyline>
+  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+  <rect x="6" y="14" width="12" height="8"></rect>
+</svg>
+</file>
+
 <file path="assets/icons/review.svg">
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -363,6 +1184,40 @@ This section contains the contents of the repository's files.
             </g>
         </g>
     </g>
+</svg>
+</file>
+
+<file path="assets/icons/seating.svg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 394 525" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-121214.940868,-70375.025537)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1530.6118,2071.9633)">
+                <path d="M0,-18.771C-10.386,-18.339 -9.685,-2.177 1.188,-3.098C10.958,-3.924 10.198,-19.195 0,-18.771M1.496,-21.384C7.498,-20.777 11.729,-14.844 10.647,-8.981C8.963,0.147 -3.096,2.67 -8.3,-5.021C-12.715,-11.546 -8.535,-20.623 -0.713,-21.384C-0.146,-21.439 0.931,-21.441 1.496,-21.384" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1505.9426,2061.1176)">
+                <path d="M0,-7.932C-5.26,-7.729 -4.865,0.51 0.698,-0.105C5.443,-0.629 4.977,-8.124 0,-7.932M1.004,-10.538C8.89,-9.594 8.265,2.655 0.089,2.6C-7.955,2.545 -8.575,-9.597 -0.715,-10.538C-0.31,-10.587 0.6,-10.587 1.004,-10.538" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1504.0437,2087.7707)">
+                <path d="M0,2.779C3.068,5.887 8.336,4.264 12.291,4.665C13.315,4.769 13.741,5.156 13.832,6.193C14.263,11.119 13.489,16.66 13.838,21.652C14.091,23.516 16.476,23.431 16.76,21.651L19.091,3.239C19.098,1.577 17.791,-0.248 16.087,-0.481C13.055,-0.896 8.11,0.352 5.563,-1.496C4.498,-2.268 3.526,-3.772 3.395,-5.096C3.053,-8.545 3.673,-12.533 3.398,-16.023C3.094,-19.876 -1.605,-19.58 -1.889,-16.392C-1.562,-11.516 -2.311,-6.104 -1.882,-1.292C-1.759,0.093 -0.972,1.795 0,2.779M-1.884,4.663L-2.966,3.228C-3.657,2.21 -4.324,0.537 -4.447,-0.691C-4.963,-5.842 -4.091,-11.769 -4.463,-17.001C-3.281,-23.2 5.493,-22.831 5.976,-16.392C6.235,-12.937 5.631,-8.991 5.973,-5.587C6.095,-4.363 6.998,-3.332 8.242,-3.192C13.526,-2.597 20.459,-5.081 21.68,2.64C21.099,8.188 20.474,13.778 19.701,19.313C19.347,21.849 19.422,24.534 16.5,25.441C14.798,25.969 12.881,25.355 11.883,23.852C11.767,23.676 11.249,22.519 11.249,22.399L11.249,7.364L0.693,7.364L0.693,22.89C0.693,22.903 0.864,23.074 0.877,23.074L5.051,23.074C5.171,23.074 5.692,23.551 5.776,23.698C6.341,24.686 5.583,25.56 4.566,25.658C1.257,25.979 -2.601,25.43 -5.967,25.623C-6.93,25.486 -7.381,24.475 -6.9,23.643C-6.814,23.494 -6.365,23.074 -6.242,23.074L-1.884,23.074L-1.884,7.364L-4.646,7.364C-7.49,7.364 -9.572,4.813 -9.745,2.153C-10.219,-5.109 -9.377,-12.88 -9.743,-20.195C-9.548,-21.81 -7.46,-21.916 -7.159,-20.317L-7.16,1.9C-7.288,2.864 -6.126,4.663 -5.137,4.663L-1.884,4.663Z" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
+</file>
+
+<file path="assets/icons/share.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="18" cy="5" r="3"></circle>
+  <circle cx="6" cy="12" r="3"></circle>
+  <circle cx="18" cy="19" r="3"></circle>
+  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
 </svg>
 </file>
 
@@ -427,57 +1282,339 @@ This section contains the contents of the repository's files.
 </svg>
 </file>
 
+<file path="assets/icons/time.svg">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 330 330" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(1,0,0,1,-121217.601999,-67522.386398)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1514.2721,1711.7556)">
+                <path d="M0,32.875C9.165,32.878 16.646,25.425 16.66,16.276C16.675,7.069 9.215,-0.419 0.023,-0.423C-9.16,-0.426 -16.634,7.037 -16.637,16.215C-16.641,25.398 -9.177,32.871 0,32.875M-1.609,-3.535L1.633,-3.535C2.254,-3.444 2.883,-3.386 3.496,-3.257C11.37,-1.601 16.535,3.077 19.028,10.715C19.44,11.978 19.609,13.292 19.773,14.605L19.773,17.847C19.732,18.139 19.69,18.431 19.651,18.724C19.057,23.276 17.135,27.19 13.84,30.371C9.5,34.56 4.278,36.41 -1.746,35.941C-4.506,35.726 -7.093,34.918 -9.512,33.584C-16.833,29.547 -21.107,21.266 -19.446,12.728C-17.915,4.856 -13.148,-0.28 -5.539,-2.78C-4.264,-3.199 -2.936,-3.371 -1.609,-3.535" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,1515.8555,1728.7484)">
+                <path d="M0,-5.812C0,-4.5 0.009,-3.188 -0.007,-1.876C-0.01,-1.558 0.098,-1.355 0.35,-1.168C2.023,0.074 3.685,1.33 5.353,2.579C5.797,2.911 6.095,3.313 6.107,3.897C6.119,4.541 5.841,5.018 5.292,5.323C4.751,5.622 4.197,5.588 3.682,5.25C3.328,5.017 2.997,4.75 2.657,4.496C1.011,3.261 -0.628,2.016 -2.285,0.797C-2.887,0.354 -3.157,-0.189 -3.152,-0.942C-3.131,-3.874 -3.146,-6.806 -3.141,-9.739C-3.14,-10.659 -2.538,-11.328 -1.692,-11.378C-0.747,-11.434 -0.015,-10.775 -0.005,-9.825C0.009,-8.487 -0.002,-7.15 -0.002,-5.812L0,-5.812Z" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
+        </g>
+    </g>
+</svg>
+</file>
+
 <file path="index.html">
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="./styles/output.css" rel="stylesheet" />
-  <title>SushiSamba Widget</title>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./styles/output.css" rel="stylesheet" />
+    <title>SushiSamba Widget</title>
+  </head>
 
-<body class="min-h-screen bg-[#fff]">
-  <div id="app" class="w-full max-w-7xl mx-auto">
-    <div id="page-container" class="pb-16"></div>
-  </div>
-<!-- ====================== FOOTER ====================== -->
+  <body class="min-h-screen bg-[#fff]">
+    <div id="app" class="w-full max-w-7xl mx-auto">
+      <div id="page-container" class="pb-16"></div>
+    </div>
+    <!-- ====================== FOOTER ====================== -->
     <footer class="w-full bg-[#f0f0f0] py-6 mt-16 flex justify-center">
       <div class="flex items-center gap-3 text-sm text-gray-600">
-
         <span>Powered by</span>
 
-        <img src="./assets/images/wedk.png" 
-             class="h-5 object-contain" />
+        <img src="./assets/images/wedk.png" class="h-5 object-contain" />
 
-        <img src="./assets/images/sauditech.png" 
-             class="h-5 object-contain" />
-
+        <img src="./assets/images/sauditech.png" class="h-5 object-contain" />
       </div>
     </footer>
 
-  <!-- ====================== GLOBAL MODAL ====================== -->
-  <div id="global-modal"
-       class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[999] hidden justify-center items-center p-4">
+    <!-- ====================== GLOBAL MODAL ====================== -->
+    <div
+      id="global-modal"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[999] hidden justify-center items-center p-4"
+    >
+      <div
+        id="modal-content"
+        class="bg-white rounded-2xl shadow-xl w-full max-w-[520px] p-6 relative overflow-y-auto md:rounded-2xl rounded-none md:max-h-[80vh] max-h-[100vh] md:h-auto h-screen"
+      >
+        <!-- Close Button -->
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-[20px] text-gray-700 hover:text-black"
+        >
+          ✕
+        </button>
 
-    <div id="modal-content"
-         class="bg-white rounded-2xl shadow-xl w-full max-w-[520px] p-6 relative overflow-y-auto 
-                md:rounded-2xl rounded-none md:max-h-[80vh] max-h-[100vh] md:h-auto h-screen">
-
-      <!-- Close Button -->
-      <button onclick="closeModal()"
-              class="absolute top-4 right-4 text-[20px] text-gray-700 hover:text-black">
-        ✕
+        <!-- Modal dynamic content goes here -->
+      </div>
+    </div>
+    <!-- test -->
+    <div>
+      <button
+        class="text-[13px] text-primary underline"
+        data-modal="paymentPolicy"
+      >
+        Payment Policy
+      </button>
+      <button class="btn-primary mt-4" data-modal="review">
+        Write a review
+      </button>
+      <button class="btn-secondary" data-modal="dayUnavailable">
+        Today is unavailable
       </button>
 
-      <!-- Modal dynamic content goes here -->
+      <button class="btn-primary" data-modal="waitlist">Join waitlist</button>
+      <button class="text-[13px] underline" data-modal="report">
+        Report an issue
+      </button>
+      <button data-modal="login">Sign in</button>
+      <button data-modal="notify">Notify me</button>
+      <button data-modal="specialNotes">Special Notes</button>
     </div>
-  </div>
-
-  <!-- Only this script, as a module -->
-  <script type="module" src="./js/main.js"></script>
-</body>
+    <!-- Only this script, as a module -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="./js/main.js"></script>
+  </body>
 </html>
+</file>
+
+<file path="js/components/bookingDetails.js">
+// js/components/bookingDetails.js
+
+/**
+ * Reusable Booking Details Card Component (returns HTML string)
+ * Use this in template literals for server-side or string-based rendering
+ */
+export function BookingDetailsCard() {
+  return `
+    <div id="booking-details"
+      class="relative bg-white rounded-xl border-b-l-none border-b-r-none border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.08)]
+                w-full max-w-[280px] mx-auto pt-6 pb-10 px-6 flex flex-col items-center">
+
+      <!-- Title -->
+      <h2 class="text-[18px] font-semibold text-center tracking-wide">Booking Details</h2>
+      <div class="w-12 mx-auto h-[1px] bg-gray-300/60 mt-2 mb-6"></div>
+
+      <!-- Remaining Time -->
+      <div class="text-center mb-10">
+        <div id="timer-countdown" class="text-[26px] font-semibold text-gray-900">3:00</div>
+        <div class="text-[12px] text-gray-500 mt-[2px]">Remaining Time</div>
+      </div>
+
+      <!-- Guests -->
+      <div class="booking-item">
+        <img src="./assets/icons/guests.svg" class="booking-icon" alt="Guests" />
+        <p class="booking-label">Guests</p>
+        <p id="summary-guests" class="booking-value">2</p>
+      </div>
+
+      <!-- Date -->
+      <div class="booking-item">
+        <img src="./assets/icons/date.svg" class="booking-icon" alt="Date" />
+        <p class="booking-label">Date</p>
+        <p id="summary-date" class="booking-value">15 Oct</p>
+      </div>
+
+      <!-- Time -->
+      <div class="booking-item">
+        <img src="./assets/icons/time.svg" class="booking-icon" alt="Time" />
+        <p class="booking-label">Time</p>
+        <p id="summary-time" class="booking-value">10:45 PM</p>
+      </div>
+
+      <!-- Area -->
+      <div class="booking-item">
+        <img src="./assets/icons/area.svg" class="booking-icon" alt="Area" />
+        <p class="booking-label">Area</p>
+        <p class="booking-value">Restaurant</p>
+      </div>
+
+      <!-- Seating -->
+      <div class="booking-item">
+        <img src="./assets/icons/seating.svg" class="booking-icon" alt="Seating" />
+        <p class="booking-label">Seating</p>
+        <p class="booking-value">2 hr</p>
+      </div>
+
+      <!-- Zig-Zag Bottom -->
+      <div class="absolute -bottom-5 left-0 w-full overflow-hidden">
+        <svg class="w-full h-5" viewBox="0 0 100 6" preserveAspectRatio="none">
+          <path d="M0 0 L5 6 L10 0 L15 6 L20 0 L25 6 L30 0 L35 6 L40 0 L45 6 L50 0 L55 6 L60 0 L65 6 L70 0 L75 6 L80 0 L85 6 L90 0 L95 6 L100 0"
+            fill="white" stroke="#e5e7eb" stroke-width="0.4" />
+        </svg>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Reusable Booking Details Card Component (returns DOM element)
+ * Use this when you need to append to the DOM directly
+ */
+export function createBookingDetailsCard() {
+  const card = document.createElement('div');
+  card.id = 'booking-details';
+  card.className = 'relative bg-white rounded-xl border border-gray-200 shadow-[0_4px_20px_rgba(0,0,0,0.08)] w-full max-w-[280px] mx-auto pt-6 pb-10 px-6 flex flex-col items-center';
+
+  card.innerHTML = BookingDetailsCard().replace(/<div id="booking-details"[^>]*>/, '').replace(/<\/div>\s*$/, '');
+
+  return card;
+}
+
+/**
+ * Update booking details values
+ */
+export function updateBookingDetails(data) {
+  const elements = {
+    guests: document.getElementById('summary-guests'),
+    date: document.getElementById('summary-date'),
+    time: document.getElementById('summary-time')
+  };
+
+  if (data.guests && elements.guests) elements.guests.textContent = data.guests;
+  if (data.date && elements.date) elements.date.textContent = data.date;
+  if (data.time && elements.time) elements.time.textContent = data.time;
+}
+</file>
+
+<file path="js/components/confirmation.js">
+// js/components/confirmation.js
+
+import { BookingDetailsCard } from "./bookingDetails.js";
+import { openModal } from "./modal.js";
+import { saveAsOldReservation } from "../state.js";
+import { loadPage, supLoadPage } from "../router.js";
+
+export default function ConfirmationPage() {
+  return `
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 px-6 py-10">
+
+    <!-- LEFT SIDE -->
+    <div class="flex flex-col">
+
+      <!-- Top Info -->
+      <div class="mb-6">
+        <h2 class="text-[22px] font-bold text-gray-900">SUSHISAMBA</h2>
+
+        <div class="flex items-center gap-3 mt-2 text-[13px] text-gray-700">
+          <img src="./assets/icons/info-japanese.svg" class="w-4 h-4" /> Japanese
+          <img src="./assets/icons/info-available.svg" class="w-4 h-4" /> Available
+          <img src="./assets/icons/info-formal.svg" class="w-4 h-4" /> Formal
+          <img src="./assets/icons/info-price.svg" class="w-4 h-4" /> $$$
+        </div>
+
+        <div class="flex items-center gap-2 text-[12px] text-gray-500 mt-2">
+          <img src="./assets/icons/location.svg" class="w-4 h-4 opacity-70" />
+          13513 حي التعاون، الرياض
+        </div>
+      </div>
+
+      <!-- Completed Status -->
+      <div class="flex flex-col items-center mt-4">
+        <p class="text-[18px] text-gray-900 font-medium mb-3">Completed</p>
+
+        <div class="w-14 h-14 rounded-full bg-[#2BC48A] flex items-center justify-center mb-6">
+          <img src="./assets/icons/check-white.svg" class="w-7 h-7" />
+        </div>
+
+        <!-- Actions (Print, Share) -->
+        <div class="flex items-center gap-6 mb-6">
+          <img src="./assets/icons/print.svg" class="w-6 h-6 cursor-pointer hover:opacity-70" />
+          <img src="./assets/icons/share.svg" class="w-6 h-6 cursor-pointer hover:opacity-70" />
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex gap-4 mb-8">
+          <button id="open-review"
+            class="px-6 py-2 bg-primary text-white rounded-lg font-medium text-[14px] shadow hover:opacity-90">
+            Review ★
+          </button>
+
+          <button id="open-report"
+            class="px-6 py-2 bg-[#FF7A00] text-white rounded-lg font-medium text-[14px] shadow hover:opacity-90">
+            Report
+          </button>
+          <button id="open-modify"
+            class="px-6 py-2 bg-primary text-white rounded-lg font-medium text-[14px] shadow hover:opacity-90">
+            Modify
+          </button>
+          <button id="open-cancel"
+            class="px-6 py-2 bg-gray-500 text-white rounded-lg font-medium text-[14px] shadow hover:opacity-90">
+            Cancel
+          </button>
+
+        </div>
+
+        <!-- QR Code -->
+        <img src="./assets/images/qr.png" class="w-40 h-40 mx-auto" />
+      </div>
+
+      <!-- Special Notes -->
+      <div class="mt-10">
+        <p class="text-[14px] font-semibold text-gray-900">Special Notes</p>
+
+        <p class="text-[12px] text-gray-600 mt-2">
+          The amount SR75/person paid to confirm the reservation does not include
+        </p>
+
+        <button id="read-more" class="text-primary text-[12px] mt-2">+ Read more</button>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: Booking Details -->
+    <div>
+      ${BookingDetailsCard()}  
+    </div>
+
+  </div>
+  `;
+}
+
+/**
+ * Initialize confirmation page event listeners
+ */
+export function init() {
+  // Review button
+  const reviewBtn = document.getElementById("open-review");
+  if (reviewBtn) {
+    reviewBtn.addEventListener("click", () => {
+      openModal("review");
+    });
+  }
+
+  // Report button
+  const reportBtn = document.getElementById("open-report");
+  if (reportBtn) {
+    reportBtn.addEventListener("click", () => {
+      openModal("report");
+    });
+  }
+
+  // Read more button for special notes
+  const readMoreBtn = document.getElementById("read-more");
+  if (readMoreBtn) {
+    readMoreBtn.addEventListener("click", () => {
+      openModal("specialNotes");
+    });
+  }
+
+  // Modify button - save current state and navigate to modify page
+  const modifyBtn = document.getElementById("open-modify");
+  if (modifyBtn) {
+    modifyBtn.addEventListener("click", () => {
+      // Save current reservation as old reservation for comparison
+      saveAsOldReservation();
+      // Navigate to modify page
+      loadPage("modify");
+    });
+  }
+
+  // Cancel button - open cancellation modal
+  const cancelBtn = document.getElementById("open-cancel");
+  if (cancelBtn) {
+    cancelBtn.addEventListener("click", () => {
+      openModal("cancel");
+    });
+  }
+}
 </file>
 
 <file path="js/components/gallery.js">
@@ -736,7 +1873,7 @@ function priceButton(amount, active = false) {
       class="price-btn ${active ? "price-btn-active" : ""}"
       data-amount="${amount}"
     >
-      ﷼ ${amount}
+      <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /> ${amount}
     </button>
   `;
 }
@@ -776,10 +1913,10 @@ function setupPriceSelector() {
       if (isCustom) {
         customInput.classList.remove("hidden");
         customInput.focus();
-        cardLabel.textContent = "﷼ --";
+        cardLabel.textContent = "<img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /> --";
       } else {
         customInput.classList.add("hidden");
-        cardLabel.textContent = `﷼ ${amount}`;
+        cardLabel.textContent = `<img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /> ${amount}`;
       }
     });
   });
@@ -787,7 +1924,7 @@ function setupPriceSelector() {
   // When typing custom price update card
   customInput.addEventListener("input", () => {
     const val = customInput.value || "--";
-    cardLabel.textContent = `﷼ ${val}`;
+    cardLabel.textContent = `<img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /> ${val}`;
   });
 }
 
@@ -851,94 +1988,27 @@ function setupValidation() {
 </file>
 
 <file path="js/components/layout.js">
+import Header from "./Header.js";
+
 export default function Layout(contentHtml, activePage = "reservation") {
   return `
   <div class="w-full flex flex-col">
 
-    <!-- ====================== TOP HEADER ====================== -->
-    <header class="w-full flex justify-between items-center py-2 px-6">
-      <!-- Left orange icon -->
-      <img src="./assets/icons/back.svg" class="w-8 h-8 cursor-pointer" />
+    ${Header()}
 
-      <!-- Centered Logo -->
-      <div class="flex flex-col items-center py-4">
-        <img src="./assets/icons/logo.svg" class="h-12" />
-        <span class="tracking-widest text-[11px] text-primary mt-[2px]">RIYADH</span>
-      </div>
+    ${HeroWithNavigation(activePage)}
 
-      <!-- Right empty (for future use) -->
-      <div class="w-8 h-8"></div>
-    </header>
+    <!-- MAIN CONTENT -->
+    <main class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 px-6 mt-16">
 
-    <!-- ====================== HERO ====================== -->
-    <div class="w-full px-6 relative pb-16">
-
-      <!-- HERO IMAGE -->
-      <div class="  rounded-3xl shadow-sm relative">
-        <img 
-          src="./assets/images/hero.png" 
-          class="w-full h-[280px] md:h-[360px] object-cover rounded-3xl"
-        />
-
-        <!-- CURVE IMAGE - ABSOLUTE AT BOTTOM -->
-        <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-[80%] mx-auto z-10">
-          <img 
-            src="./assets/images/curve.png" 
-            class="w-full block pointer-events-none select-none"
-          />
-        </div>
-
-        <!-- NAVIGATION TABS OVER CURVE - ABSOLUTE -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 
-                    -bottom-2 flex gap-8 z-20">
-
-          <button 
-            data-page="reservation"
-            class="tab-btn ${activePage === "reservation" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-calendar.svg" class="w-4 h-4 ${activePage === "reservation"
-      ? "brightness-0 invert"
-      : "brightness-0"
-    }" />
-            Reservation
-          </button>
-
-          <button 
-            data-page="gallery"
-            class="tab-btn ${activePage === "gallery" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-gallery.svg" class="w-4 h-4 ${activePage === "gallery" ? "brightness-0 invert" : "brightness-0"
-    }" />
-            Gallery
-          </button>
-
-          <button 
-            data-page="giftcard"
-            class="tab-btn ${activePage === "giftcard" ? "tab-active" : "tab-inactive"
-    }">
-            <img src="./assets/icons/nav-gift.svg" class="w-4 h-4 ${activePage === "giftcard" ? "brightness-0 invert" : "brightness-0"
-    }" />
-            Gift Card
-          </button>
-
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ====================== MAIN CONTENT + SIDEBAR ====================== -->
-    <main class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 px-6">
-
-      <!-- LEFT: Dynamic content -->
+      <!-- LEFT -->
       <div id="dynamic-page">
         ${contentHtml}
       </div>
 
-      <!-- RIGHT: Shared Sidebar -->
-     <!-- RIGHT SIDEBAR -->
-<aside class="flex flex-col gap-10">
-
-  <!-- Restaurant Title + Info Icons -->
+      <!-- RIGHT SIDEBAR -->
+      <aside class="hidden lg:flex flex-col gap-10">
+          <!-- Restaurant Title + Info Icons -->
   <div>
     <h2 class="text-[22px] font-semibold text-black mb-1">SUSHISAMBA</h2>
 
@@ -1015,12 +2085,63 @@ export default function Layout(contentHtml, activePage = "reservation") {
   <a href="#" class="text-[13px] text-primary underline block">
     Al Motassem Street, Riyadh, 12212
   </a>
-
-</aside>
+      </aside>
 
     </main>
 
-  </div> 
+  </div>
+  `;
+}
+
+function HeroWithNavigation(activePage) {
+  return `
+  <section class="relative px-6">
+
+    <!-- HERO IMAGE -->
+    <div class="relative rounded-3xl overflow-hidden shadow-sm">
+      <img 
+        src="./assets/images/hero.webp"
+        class="w-full h-[260px] md:h-[360px] object-cover"
+      /> 
+      <!-- CURVE -->
+      <img 
+        src="./assets/images/curve.png"
+        class="absolute bottom-0 left-0 w-full pointer-events-none select-none"
+      />
+    </div>
+
+    <!-- NAVIGATION TABS -->
+    <div class="absolute left-1/2 -translate-x-1/2 -bottom-6 z-20">
+      <div class="bg-white rounded-full shadow-lg flex gap-2 px-3 py-2">
+
+        ${NavButton("reservation", "Reservation", "./assets/icons/nav-calendar.svg", activePage)}
+        ${NavButton("gallery", "Gallery", "./assets/icons/nav-gallery.svg", activePage)}
+        ${NavButton("giftcard", "Gift Card", "./assets/icons/nav-gift.svg", activePage)}
+
+      </div>
+    </div>
+
+  </section>
+  `;
+}
+
+function NavButton(page, label, icon, activePage) {
+  const isActive = activePage === page;
+  return `
+    <button 
+      data-page="${page}"
+      class="flex items-center gap-2 px-4 py-2 rounded-full text-sm transition
+        ${isActive
+      ? "bg-primary text-white"
+      : "text-gray-700 hover:bg-gray-100"}
+      "
+    >
+      <img 
+        src="${icon}" 
+        class="w-4 h-4 ${isActive ? "brightness-0 invert" : ""}"
+      />
+      ${label}
+    </button>
   `;
 }
 </file>
@@ -1374,6 +2495,9 @@ function specialNotesPopupContent() {
 </file>
 
 <file path="js/components/reservation.js">
+import { ReservationState, updateState } from "../state.js";
+import { loadPage, supLoadPage } from "../router.js";
+
 export default function Reservation() {
   return `
   <div class="w-full flex flex-col gap-10">
@@ -1594,10 +2718,11 @@ export function init() {
 /* ---------- DROPDOWNS ---------- */
 
 function setupDropdowns() {
+  // Start from global state so returning users keep their selections
   const state = {
-    guests: 2,
-    children: 0,
-    time: "3:00 PM",
+    guests: ReservationState.guests ?? 2,
+    children: ReservationState.children ?? 0,
+    time: ReservationState.time ?? "3:00 PM",
   };
 
   const dropdownTriggers = document.querySelectorAll("[data-dropdown]");
@@ -1631,6 +2756,10 @@ function setupDropdowns() {
     guestsCount.textContent = state.guests;
     childrenCount.textContent = state.children;
     guestsValue.textContent = state.guests;
+
+    // UPDATE GLOBAL STATE
+    updateState("guests", state.guests);
+    updateState("children", state.children);
   }
 
   document.querySelectorAll(".qty-btn").forEach((btn) => {
@@ -1656,16 +2785,35 @@ function setupDropdowns() {
   const periodEl = document.getElementById("time-period");
   const timeValueEl = document.getElementById("time-value");
 
-  let hour = 3;
-  let minute = 0;
-  let period = "PM";
+  function parseTimeString(value) {
+    const match = value.match(/^(\d{1,2}):(\d{2})\s?(AM|PM)$/i);
+    if (!match) {
+      return { hour: 3, minute: 0, period: "PM" };
+    }
+    const [, h, m, p] = match;
+    return {
+      hour: Math.min(Math.max(parseInt(h, 10), 1), 12),
+      minute: Math.min(Math.max(parseInt(m, 10), 0), 59),
+      period: p.toUpperCase() === "AM" ? "AM" : "PM",
+    };
+  }
+
+  const parsedTime = parseTimeString(state.time);
+  let hour = parsedTime.hour;
+  let minute = parsedTime.minute;
+  let period = parsedTime.period;
 
   function updateTimeUI() {
     hourEl.textContent = hour;
     minuteEl.textContent = minute.toString().padStart(2, "0");
     periodEl.textContent = period;
 
-    timeValueEl.textContent = `${hour}:${minuteEl.textContent} ${period}`;
+    const finalTime = `${hour}:${minuteEl.textContent} ${period}`;
+    state.time = finalTime;
+    timeValueEl.textContent = finalTime;
+
+    // UPDATE GLOBAL STATE
+    updateState("time", finalTime);
   }
 
   // Increase/decrease logic
@@ -1718,8 +2866,12 @@ function setupCalendar() {
   const grid = document.getElementById("cal-grid");
   if (!dateSpan || !monthLabel || !grid) return;
 
-  let current = new Date();
-  let selected = new Date();
+  const today = new Date();
+  const savedDate = ReservationState.date ? new Date(ReservationState.date) : null;
+  const initialDate = savedDate && !isNaN(savedDate) ? savedDate : today;
+
+  let current = new Date(initialDate);
+  let selected = new Date(initialDate);
 
   function formatDisplayDate(date) {
     const opts = { month: "short", day: "numeric", year: "2-digit" };
@@ -1771,6 +2923,10 @@ function setupCalendar() {
         const day = parseInt(btn.dataset.day, 10);
         selected = new Date(year, month, day);
         dateSpan.textContent = formatDisplayDate(selected);
+
+        // UPDATE GLOBAL STATE
+        updateState("date", selected.toISOString());
+
         renderCalendar(); // re-render to highlight selection
         // close only date panel
         const panel = document.querySelector('[data-panel="date"]');
@@ -1781,6 +2937,7 @@ function setupCalendar() {
 
   // Initial date display
   dateSpan.textContent = formatDisplayDate(selected);
+  updateState("date", selected.toISOString());
   renderCalendar();
 
   // Month navigation
@@ -1815,18 +2972,68 @@ function setupTimeslots() {
       return;
     }
 
+    // Restore previously selected slot, if any
+    if (ReservationState.timeSlot && ReservationState.timeSlot === btn.dataset.slot) {
+      btn.classList.add("timeslot-active");
+      activeButton = btn;
+    }
+
     btn.addEventListener("click", () => {
       if (activeButton) {
         activeButton.classList.remove("timeslot-active");
       }
-      if (activeButton === btn) {
-        activeButton = null;
-        return;
-      }
+
       activeButton = btn;
       btn.classList.add("timeslot-active");
+
+      const slot = btn.dataset.slot;
+
+      console.log("button clicked!")
+      // UPDATE GLOBAL STATE
+      updateState("timeSlot", slot);
+
+      // Redirect to checkout page
+      supLoadPage("checkout");
     });
+
   });
+}
+</file>
+
+<file path="js/components/subLayout.js">
+export default function subLayout(contentHtml) {
+  return `
+  <div class="w-full flex flex-col min-h-screen">
+
+    <!-- subLayout Header -->
+    <header class="w-full flex items-center justify-between px-6 py-4 border-b">
+      <img src="./assets/icons/back.svg" class="w-7 h-7 cursor-pointer" onclick="navigate('reservation')" />
+
+      <div class="flex flex-col items-center">
+        <img src="./assets/icons/logo.svg" class="h-7" />
+      </div>
+
+      <div class="w-7 h-7"></div>
+    </header>
+ <!-- HERO IMAGE -->
+      <div class="  rounded-3xl shadow-sm relative">
+        <img 
+          src="./assets/images/hero.webp" 
+          class="w-full h-[280px] md:h-[360px] object-cover rounded-3xl"
+        />
+        </div>
+    <!-- Page Content -->
+    <main class="flex-1 px-6 py-8">
+      ${contentHtml}
+    </main>
+
+    <!-- Optional Minimal Footer -->
+    <footer class="py-4 text-center text-[11px] text-gray-400">
+      Powered by Wddk
+    </footer>
+
+  </div>
+  `;
 }
 </file>
 
@@ -1834,6 +3041,9 @@ function setupTimeslots() {
 // js/main.js
 import { loadPage } from "./router.js";
 import { openModal, closeModal } from "./components/modal.js";
+import { ReservationState, updateState } from "./state.js";
+
+/* ---------- TAB NAVIGATION ---------- */
 
 function initTabs() {
     const buttons = document.querySelectorAll("button[data-page]");
@@ -1847,15 +3057,41 @@ function initTabs() {
     });
 }
 
+/* ---------- GLOBAL MODAL TRIGGERS ---------- */
+/**
+ * Any element with data-modal="type" will open that popup.
+ * Example:
+ *   <button data-modal="review">Write a review</button>
+ *   <a href="#" data-modal="paymentPolicy">View payment policy</a>
+ */
+function initModalTriggers() {
+    document.addEventListener("click", (e) => {
+        const trigger = e.target.closest("[data-modal]");
+        if (!trigger) return;
+
+        const type = trigger.dataset.modal;
+        if (!type) return;
+
+        e.preventDefault();
+        openModal(type);
+    });
+}
+
+/* ---------- BOOTSTRAP ---------- */
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Make modal functions globally available for inline onclick handlers
+    // Make modal functions globally available for inline onclick handlers (if needed)
     window.openModal = openModal;
     window.closeModal = closeModal;
 
+    // Start with reservation page
     loadPage("reservation");
+
+    // Set up global handlers
+    initModalTriggers();
 });
 
-// after every page load, re-bind the tab events
+// Re-bind tabs after every page load
 document.addEventListener("page-loaded", () => {
     initTabs();
 });
@@ -1864,6 +3100,7 @@ document.addEventListener("page-loaded", () => {
 <file path="js/router.js">
 // js/router.js
 import Layout from "./components/layout.js";
+import subLayout from "./components/subLayout.js";
 
 export function loadPage(page = "reservation") {
     const container = document.getElementById("page-container");
@@ -1882,20 +3119,78 @@ export function loadPage(page = "reservation") {
         );
     });
 }
+export function supLoadPage(page = "reservation") {
+    const container = document.getElementById("page-container");
+
+    import(`./components/${page}.js`).then((module) => {
+        const content = module.default();
+        container.innerHTML = subLayout(content, page);
+
+        // Call component init() if it exists (for logic)
+        if (typeof module.init === "function") {
+            module.init();
+        }
+
+        document.dispatchEvent(
+            new CustomEvent("page-loaded", { detail: { page } })
+        );
+    });
+}
 </file>
 
-<file path="package.json">
-{
-  "name": "sushisamba-widget",
-  "version": "1.0.0",
-  "description": "Responsive HTML/CSS/JS project with TailwindCSS",
-  "scripts": {
-    "build:css": "tailwindcss -i ./styles/main-input.css -o ./styles/output.css",
-    "dev:css": "tailwindcss -i ./styles/main-input.css -o ./styles/output.css --watch"
-  },
-  "devDependencies": {
-    "tailwindcss": "^3.4.0"
-  }
+<file path="js/state.js">
+// js/state.js
+
+// GLOBAL RESERVATION STATE
+export const ReservationState = {
+    guests: 2,
+    children: 0,
+    date: null,      // example "2025-07-13"
+    formattedDate: null, // formatted date like "15 Oct"
+    time: null,      // user selected base time ("7:00 PM")
+    timeSlot: null,
+    slot: null,      // actual timeslot chosen ("7:15 PM")
+    area: null,      // terrace / dining room / lounge
+    specialNotesAccepted: false,
+
+    // Store original values when modifying a booking
+    oldReservation: null,
+
+    contact: {
+        fname: "",
+        lname: "",
+        phone: "",
+        email: ""
+    }
+};
+
+// Utility to update the state safely
+export function updateState(key, value) {
+    ReservationState[key] = value;
+    console.log("ReservationState updated:", ReservationState);
+}
+
+// Update nested fields (contact, etc.)
+export function updateContact(key, value) {
+    ReservationState.contact[key] = value;
+    console.log("ReservationState updated:", ReservationState);
+}
+
+// Save current reservation as old reservation for modification comparison
+export function saveAsOldReservation() {
+    ReservationState.oldReservation = {
+        guests: ReservationState.guests,
+        children: ReservationState.children,
+        date: ReservationState.date,
+        time: ReservationState.time,
+        timeSlot: ReservationState.timeSlot
+    };
+    console.log("Old reservation saved:", ReservationState.oldReservation);
+}
+
+// Clear old reservation after modification is complete
+export function clearOldReservation() {
+    ReservationState.oldReservation = null;
 }
 </file>
 
@@ -1931,18 +3226,19 @@ This is a responsive HTML/CSS/JS project using TailwindCSS.
 *   `styles/`: Contains CSS source files and the generated `output.css`.
 *   `js/`: Contains JavaScript logic and components.
 *   `assets/`: Contains fonts and images.
+# wddk
 </file>
 
 <file path="styles/global.css">
 @font-face {
-  font-family: 'HelveticaNeueW23';
-  src: url('../assets/fonts/HelveticaNeue-Reg.woff2') format('woff2');
+  font-family: "HelveticaNeueW23";
+  src: url("../assets/fonts/HelveticaNeue-Reg.woff2") format("woff2");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'HelveticaNeueW23';
-  src: url('../assets/fonts/HelveticaNeue-Bd.woff2') format('woff2');
+  font-family: "HelveticaNeueW23";
+  src: url("../assets/fonts/HelveticaNeue-Bd.woff2") format("woff2");
   font-weight: 700;
 }
 
@@ -2079,8 +3375,12 @@ body {
 }
 
 @keyframes modalFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Popup scale + slide animation */
@@ -2098,3775 +3398,29 @@ body {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* ====================== BOOKING ITEM STYLES ====================== */
+.booking-item {
+  @apply flex flex-col items-center text-center mb-10;
+}
+
+.booking-icon {
+  @apply w-7 h-7 mb-1;
+}
+
+.booking-label {
+  @apply text-[13px] text-gray-600 mb-[2px];
+}
+
+.booking-value {
+  @apply text-[16px] font-medium text-gray-900;
 }
 </file>
 
 <file path="styles/main-input.css">
 @import "./tailwind.css";
 @import "./global.css";
-</file>
-
-<file path="styles/output.css">
-*, ::before, ::after {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
-}
-
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x:  ;
-  --tw-pan-y:  ;
-  --tw-pinch-zoom:  ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position:  ;
-  --tw-gradient-via-position:  ;
-  --tw-gradient-to-position:  ;
-  --tw-ordinal:  ;
-  --tw-slashed-zero:  ;
-  --tw-numeric-figure:  ;
-  --tw-numeric-spacing:  ;
-  --tw-numeric-fraction:  ;
-  --tw-ring-inset:  ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur:  ;
-  --tw-brightness:  ;
-  --tw-contrast:  ;
-  --tw-grayscale:  ;
-  --tw-hue-rotate:  ;
-  --tw-invert:  ;
-  --tw-saturate:  ;
-  --tw-sepia:  ;
-  --tw-drop-shadow:  ;
-  --tw-backdrop-blur:  ;
-  --tw-backdrop-brightness:  ;
-  --tw-backdrop-contrast:  ;
-  --tw-backdrop-grayscale:  ;
-  --tw-backdrop-hue-rotate:  ;
-  --tw-backdrop-invert:  ;
-  --tw-backdrop-opacity:  ;
-  --tw-backdrop-saturate:  ;
-  --tw-backdrop-sepia:  ;
-  --tw-contain-size:  ;
-  --tw-contain-layout:  ;
-  --tw-contain-paint:  ;
-  --tw-contain-style:  ;
-}
-
-/*
-! tailwindcss v3.4.18 | MIT License | https://tailwindcss.com
-*/
-
-/*
-1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
-2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
-*/
-
-*,
-::before,
-::after {
-  box-sizing: border-box;
-  /* 1 */
-  border-width: 0;
-  /* 2 */
-  border-style: solid;
-  /* 2 */
-  border-color: #e5e7eb;
-  /* 2 */
-}
-
-::before,
-::after {
-  --tw-content: '';
-}
-
-/*
-1. Use a consistent sensible line-height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-3. Use a more readable tab size.
-4. Use the user's configured `sans` font-family by default.
-5. Use the user's configured `sans` font-feature-settings by default.
-6. Use the user's configured `sans` font-variation-settings by default.
-7. Disable tap highlights on iOS
-*/
-
-html,
-:host {
-  line-height: 1.5;
-  /* 1 */
-  -webkit-text-size-adjust: 100%;
-  /* 2 */
-  -moz-tab-size: 4;
-  /* 3 */
-  -o-tab-size: 4;
-     tab-size: 4;
-  /* 3 */
-  font-family: HelveticaNeueW23, sans-serif;
-  /* 4 */
-  font-feature-settings: normal;
-  /* 5 */
-  font-variation-settings: normal;
-  /* 6 */
-  -webkit-tap-highlight-color: transparent;
-  /* 7 */
-}
-
-/*
-1. Remove the margin in all browsers.
-2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
-*/
-
-body {
-  margin: 0;
-  /* 1 */
-  line-height: inherit;
-  /* 2 */
-}
-
-/*
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-3. Ensure horizontal rules are visible by default.
-*/
-
-hr {
-  height: 0;
-  /* 1 */
-  color: inherit;
-  /* 2 */
-  border-top-width: 1px;
-  /* 3 */
-}
-
-/*
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
-
-abbr:where([title]) {
-  -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
-}
-
-/*
-Remove the default font size and weight for headings.
-*/
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
-/*
-Reset links to optimize for opt-in styling instead of opt-out.
-*/
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-/*
-Add the correct font weight in Edge and Safari.
-*/
-
-b,
-strong {
-  font-weight: bolder;
-}
-
-/*
-1. Use the user's configured `mono` font-family by default.
-2. Use the user's configured `mono` font-feature-settings by default.
-3. Use the user's configured `mono` font-variation-settings by default.
-4. Correct the odd `em` font sizing in all browsers.
-*/
-
-code,
-kbd,
-samp,
-pre {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  /* 1 */
-  font-feature-settings: normal;
-  /* 2 */
-  font-variation-settings: normal;
-  /* 3 */
-  font-size: 1em;
-  /* 4 */
-}
-
-/*
-Add the correct font size in all browsers.
-*/
-
-small {
-  font-size: 80%;
-}
-
-/*
-Prevent `sub` and `sup` elements from affecting the line height in all browsers.
-*/
-
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: baseline;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-sup {
-  top: -0.5em;
-}
-
-/*
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-3. Remove gaps between table borders by default.
-*/
-
-table {
-  text-indent: 0;
-  /* 1 */
-  border-color: inherit;
-  /* 2 */
-  border-collapse: collapse;
-  /* 3 */
-}
-
-/*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit;
-  /* 1 */
-  font-feature-settings: inherit;
-  /* 1 */
-  font-variation-settings: inherit;
-  /* 1 */
-  font-size: 100%;
-  /* 1 */
-  font-weight: inherit;
-  /* 1 */
-  line-height: inherit;
-  /* 1 */
-  letter-spacing: inherit;
-  /* 1 */
-  color: inherit;
-  /* 1 */
-  margin: 0;
-  /* 2 */
-  padding: 0;
-  /* 3 */
-}
-
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-
-button,
-select {
-  text-transform: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-
-button,
-input:where([type='button']),
-input:where([type='reset']),
-input:where([type='submit']) {
-  -webkit-appearance: button;
-  /* 1 */
-  background-color: transparent;
-  /* 2 */
-  background-image: none;
-  /* 2 */
-}
-
-/*
-Use the modern Firefox focus style for all focusable elements.
-*/
-
-:-moz-focusring {
-  outline: auto;
-}
-
-/*
-Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
-*/
-
-:-moz-ui-invalid {
-  box-shadow: none;
-}
-
-/*
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
-progress {
-  vertical-align: baseline;
-}
-
-/*
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
-::-webkit-inner-spin-button,
-::-webkit-outer-spin-button {
-  height: auto;
-}
-
-/*
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
-
-[type='search'] {
-  -webkit-appearance: textfield;
-  /* 1 */
-  outline-offset: -2px;
-  /* 2 */
-}
-
-/*
-Remove the inner padding in Chrome and Safari on macOS.
-*/
-
-::-webkit-search-decoration {
-  -webkit-appearance: none;
-}
-
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Change font properties to `inherit` in Safari.
-*/
-
-::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  /* 1 */
-  font: inherit;
-  /* 2 */
-}
-
-/*
-Add the correct display in Chrome and Safari.
-*/
-
-summary {
-  display: list-item;
-}
-
-/*
-Removes the default spacing and border for appropriate elements.
-*/
-
-blockquote,
-dl,
-dd,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-figure,
-p,
-pre {
-  margin: 0;
-}
-
-fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-legend {
-  padding: 0;
-}
-
-ol,
-ul,
-menu {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/*
-Reset default styling for dialogs.
-*/
-
-dialog {
-  padding: 0;
-}
-
-/*
-Prevent resizing textareas horizontally by default.
-*/
-
-textarea {
-  resize: vertical;
-}
-
-/*
-1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-2. Set the default placeholder color to the user's configured gray 400 color.
-*/
-
-input::-moz-placeholder, textarea::-moz-placeholder {
-  opacity: 1;
-  /* 1 */
-  color: #9ca3af;
-  /* 2 */
-}
-
-input::placeholder,
-textarea::placeholder {
-  opacity: 1;
-  /* 1 */
-  color: #9ca3af;
-  /* 2 */
-}
-
-/*
-Set the default cursor for buttons.
-*/
-
-button,
-[role="button"] {
-  cursor: pointer;
-}
-
-/*
-Make sure disabled buttons don't get the pointer cursor.
-*/
-
-:disabled {
-  cursor: default;
-}
-
-/*
-1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
-2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
-   This can trigger a poorly considered lint error in some tools but is included by design.
-*/
-
-img,
-svg,
-video,
-canvas,
-audio,
-iframe,
-embed,
-object {
-  display: block;
-  /* 1 */
-  vertical-align: middle;
-  /* 2 */
-}
-
-/*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
-*/
-
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Make elements with the HTML hidden attribute stay hidden by default */
-
-[hidden]:where(:not([hidden="until-found"])) {
-  display: none;
-}
-
-.container {
-  width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container {
-    max-width: 1280px;
-  }
-}
-
-@media (min-width: 1536px) {
-  .container {
-    max-width: 1536px;
-  }
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-.not-sr-only {
-  position: static;
-  width: auto;
-  height: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  clip: auto;
-  white-space: normal;
-}
-
-.pointer-events-none {
-  pointer-events: none;
-}
-
-.pointer-events-auto {
-  pointer-events: auto;
-}
-
-.visible {
-  visibility: visible;
-}
-
-.invisible {
-  visibility: hidden;
-}
-
-.collapse {
-  visibility: collapse;
-}
-
-.static {
-  position: static;
-}
-
-.fixed {
-  position: fixed;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
-
-.sticky {
-  position: sticky;
-}
-
-.-inset-1 {
-  inset: -0.25rem;
-}
-
-.inset-0 {
-  inset: 0px;
-}
-
-.-bottom-12 {
-  bottom: -3rem;
-}
-
-.-bottom-2 {
-  bottom: -0.5rem;
-}
-
-.bottom-5 {
-  bottom: 1.25rem;
-}
-
-.bottom-7 {
-  bottom: 1.75rem;
-}
-
-.left-1\/2 {
-  left: 50%;
-}
-
-.left-\[19\%\] {
-  left: 19%;
-}
-
-.left-\[20\%\] {
-  left: 20%;
-}
-
-.left-\[42\%\] {
-  left: 42%;
-}
-
-.right-10 {
-  right: 2.5rem;
-}
-
-.right-4 {
-  right: 1rem;
-}
-
-.right-8 {
-  right: 2rem;
-}
-
-.top-0 {
-  top: 0px;
-}
-
-.top-1\/2 {
-  top: 50%;
-}
-
-.top-4 {
-  top: 1rem;
-}
-
-.top-6 {
-  top: 1.5rem;
-}
-
-.top-\[34\%\] {
-  top: 34%;
-}
-
-.isolate {
-  isolation: isolate;
-}
-
-.isolation-auto {
-  isolation: auto;
-}
-
-.z-10 {
-  z-index: 10;
-}
-
-.z-20 {
-  z-index: 20;
-}
-
-.z-\[999\] {
-  z-index: 999;
-}
-
-.float-start {
-  float: inline-start;
-}
-
-.float-end {
-  float: inline-end;
-}
-
-.float-right {
-  float: right;
-}
-
-.float-left {
-  float: left;
-}
-
-.float-none {
-  float: none;
-}
-
-.clear-start {
-  clear: inline-start;
-}
-
-.clear-end {
-  clear: inline-end;
-}
-
-.clear-left {
-  clear: left;
-}
-
-.clear-right {
-  clear: right;
-}
-
-.clear-both {
-  clear: both;
-}
-
-.clear-none {
-  clear: none;
-}
-
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
-
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.my-2 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-3 {
-  margin-bottom: 0.75rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-5 {
-  margin-bottom: 1.25rem;
-}
-
-.mb-6 {
-  margin-bottom: 1.5rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
-.mt-16 {
-  margin-top: 4rem;
-}
-
-.mt-2 {
-  margin-top: 0.5rem;
-}
-
-.mt-3 {
-  margin-top: 0.75rem;
-}
-
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mt-5 {
-  margin-top: 1.25rem;
-}
-
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
-.mt-\[2px\] {
-  margin-top: 2px;
-}
-
-.box-border {
-  box-sizing: border-box;
-}
-
-.box-content {
-  box-sizing: content-box;
-}
-
-.line-clamp-none {
-  overflow: visible;
-  display: block;
-  -webkit-box-orient: horizontal;
-  -webkit-line-clamp: none;
-}
-
-.block {
-  display: block;
-}
-
-.inline-block {
-  display: inline-block;
-}
-
-.inline {
-  display: inline;
-}
-
-.flex {
-  display: flex;
-}
-
-.inline-flex {
-  display: inline-flex;
-}
-
-.table {
-  display: table;
-}
-
-.inline-table {
-  display: inline-table;
-}
-
-.table-caption {
-  display: table-caption;
-}
-
-.table-cell {
-  display: table-cell;
-}
-
-.table-column {
-  display: table-column;
-}
-
-.table-column-group {
-  display: table-column-group;
-}
-
-.table-footer-group {
-  display: table-footer-group;
-}
-
-.table-header-group {
-  display: table-header-group;
-}
-
-.table-row-group {
-  display: table-row-group;
-}
-
-.table-row {
-  display: table-row;
-}
-
-.flow-root {
-  display: flow-root;
-}
-
-.\!grid {
-  display: grid !important;
-}
-
-.grid {
-  display: grid;
-}
-
-.inline-grid {
-  display: inline-grid;
-}
-
-.contents {
-  display: contents;
-}
-
-.list-item {
-  display: list-item;
-}
-
-.hidden {
-  display: none;
-}
-
-.h-12 {
-  height: 3rem;
-}
-
-.h-2 {
-  height: 0.5rem;
-}
-
-.h-4 {
-  height: 1rem;
-}
-
-.h-5 {
-  height: 1.25rem;
-}
-
-.h-6 {
-  height: 1.5rem;
-}
-
-.h-7 {
-  height: 1.75rem;
-}
-
-.h-8 {
-  height: 2rem;
-}
-
-.h-\[100px\] {
-  height: 100px;
-}
-
-.h-\[110px\] {
-  height: 110px;
-}
-
-.h-\[120px\] {
-  height: 120px;
-}
-
-.h-\[250px\] {
-  height: 250px;
-}
-
-.h-\[280px\] {
-  height: 280px;
-}
-
-.h-\[85px\] {
-  height: 85px;
-}
-
-.h-\[90px\] {
-  height: 90px;
-}
-
-.h-full {
-  height: 100%;
-}
-
-.h-screen {
-  height: 100vh;
-}
-
-.max-h-\[100vh\] {
-  max-height: 100vh;
-}
-
-.max-h-\[300px\] {
-  max-height: 300px;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.w-4 {
-  width: 1rem;
-}
-
-.w-5 {
-  width: 1.25rem;
-}
-
-.w-6 {
-  width: 1.5rem;
-}
-
-.w-7 {
-  width: 1.75rem;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-\[100px\] {
-  width: 100px;
-}
-
-.w-\[40\%\] {
-  width: 40%;
-}
-
-.w-\[7px\] {
-  width: 7px;
-}
-
-.w-\[80\%\] {
-  width: 80%;
-}
-
-.w-\[80px\] {
-  width: 80px;
-}
-
-.w-\[85px\] {
-  width: 85px;
-}
-
-.w-\[90px\] {
-  width: 90px;
-}
-
-.w-\[this-is\\\\\] {
-  width: this-is\\;
-}
-
-.w-\[this-is\] {
-  width: this-is;
-}
-
-.w-\[weird-and-invalid\] {
-  width: weird-and-invalid;
-}
-
-.w-full {
-  width: 100%;
-}
-
-.min-w-\[260px\] {
-  min-width: 260px;
-}
-
-.max-w-7xl {
-  max-width: 80rem;
-}
-
-.max-w-\[460px\] {
-  max-width: 460px;
-}
-
-.max-w-\[520px\] {
-  max-width: 520px;
-}
-
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.flex-shrink {
-  flex-shrink: 1;
-}
-
-.shrink {
-  flex-shrink: 1;
-}
-
-.flex-grow {
-  flex-grow: 1;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-.table-auto {
-  table-layout: auto;
-}
-
-.table-fixed {
-  table-layout: fixed;
-}
-
-.caption-top {
-  caption-side: top;
-}
-
-.caption-bottom {
-  caption-side: bottom;
-}
-
-.border-collapse {
-  border-collapse: collapse;
-}
-
-.border-separate {
-  border-collapse: separate;
-}
-
-.-translate-x-1\/2 {
-  --tw-translate-x: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-translate-x-\[50\%\] {
-  --tw-translate-x: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-translate-y-\[50\%\] {
-  --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.\!transform {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y)) !important;
-}
-
-.transform {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.transform-cpu {
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.transform-gpu {
-  transform: translate3d(var(--tw-translate-x), var(--tw-translate-y), 0) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.transform-none {
-  transform: none;
-}
-
-.cursor-not-allowed {
-  cursor: not-allowed;
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.touch-auto {
-  touch-action: auto;
-}
-
-.touch-none {
-  touch-action: none;
-}
-
-.touch-pan-x {
-  --tw-pan-x: pan-x;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pan-left {
-  --tw-pan-x: pan-left;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pan-right {
-  --tw-pan-x: pan-right;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pan-y {
-  --tw-pan-y: pan-y;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pan-up {
-  --tw-pan-y: pan-up;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pan-down {
-  --tw-pan-y: pan-down;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-pinch-zoom {
-  --tw-pinch-zoom: pinch-zoom;
-  touch-action: var(--tw-pan-x) var(--tw-pan-y) var(--tw-pinch-zoom);
-}
-
-.touch-manipulation {
-  touch-action: manipulation;
-}
-
-.select-none {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-
-.select-text {
-  -webkit-user-select: text;
-     -moz-user-select: text;
-          user-select: text;
-}
-
-.select-all {
-  -webkit-user-select: all;
-     -moz-user-select: all;
-          user-select: all;
-}
-
-.select-auto {
-  -webkit-user-select: auto;
-     -moz-user-select: auto;
-          user-select: auto;
-}
-
-.resize-none {
-  resize: none;
-}
-
-.resize-y {
-  resize: vertical;
-}
-
-.resize-x {
-  resize: horizontal;
-}
-
-.resize {
-  resize: both;
-}
-
-.snap-none {
-  scroll-snap-type: none;
-}
-
-.snap-x {
-  scroll-snap-type: x var(--tw-scroll-snap-strictness);
-}
-
-.snap-y {
-  scroll-snap-type: y var(--tw-scroll-snap-strictness);
-}
-
-.snap-both {
-  scroll-snap-type: both var(--tw-scroll-snap-strictness);
-}
-
-.snap-mandatory {
-  --tw-scroll-snap-strictness: mandatory;
-}
-
-.snap-proximity {
-  --tw-scroll-snap-strictness: proximity;
-}
-
-.snap-start {
-  scroll-snap-align: start;
-}
-
-.snap-end {
-  scroll-snap-align: end;
-}
-
-.snap-center {
-  scroll-snap-align: center;
-}
-
-.snap-align-none {
-  scroll-snap-align: none;
-}
-
-.snap-normal {
-  scroll-snap-stop: normal;
-}
-
-.snap-always {
-  scroll-snap-stop: always;
-}
-
-.list-inside {
-  list-style-position: inside;
-}
-
-.list-outside {
-  list-style-position: outside;
-}
-
-.appearance-none {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-}
-
-.appearance-auto {
-  -webkit-appearance: auto;
-     -moz-appearance: auto;
-          appearance: auto;
-}
-
-.break-before-auto {
-  -moz-column-break-before: auto;
-       break-before: auto;
-}
-
-.break-before-avoid {
-  -moz-column-break-before: avoid;
-       break-before: avoid;
-}
-
-.break-before-all {
-  -moz-column-break-before: all;
-       break-before: all;
-}
-
-.break-before-avoid-page {
-  -moz-column-break-before: avoid;
-       break-before: avoid-page;
-}
-
-.break-before-page {
-  -moz-column-break-before: page;
-       break-before: page;
-}
-
-.break-before-left {
-  -moz-column-break-before: left;
-       break-before: left;
-}
-
-.break-before-right {
-  -moz-column-break-before: right;
-       break-before: right;
-}
-
-.break-before-column {
-  -moz-column-break-before: column;
-       break-before: column;
-}
-
-.break-inside-auto {
-  -moz-column-break-inside: auto;
-       break-inside: auto;
-}
-
-.break-inside-avoid {
-  -moz-column-break-inside: avoid;
-       break-inside: avoid;
-}
-
-.break-inside-avoid-page {
-  break-inside: avoid-page;
-}
-
-.break-inside-avoid-column {
-  -moz-column-break-inside: avoid;
-       break-inside: avoid-column;
-}
-
-.break-after-auto {
-  -moz-column-break-after: auto;
-       break-after: auto;
-}
-
-.break-after-avoid {
-  -moz-column-break-after: avoid;
-       break-after: avoid;
-}
-
-.break-after-all {
-  -moz-column-break-after: all;
-       break-after: all;
-}
-
-.break-after-avoid-page {
-  -moz-column-break-after: avoid;
-       break-after: avoid-page;
-}
-
-.break-after-page {
-  -moz-column-break-after: page;
-       break-after: page;
-}
-
-.break-after-left {
-  -moz-column-break-after: left;
-       break-after: left;
-}
-
-.break-after-right {
-  -moz-column-break-after: right;
-       break-after: right;
-}
-
-.break-after-column {
-  -moz-column-break-after: column;
-       break-after: column;
-}
-
-.grid-flow-row {
-  grid-auto-flow: row;
-}
-
-.grid-flow-col {
-  grid-auto-flow: column;
-}
-
-.grid-flow-dense {
-  grid-auto-flow: dense;
-}
-
-.grid-flow-row-dense {
-  grid-auto-flow: row dense;
-}
-
-.grid-flow-col-dense {
-  grid-auto-flow: column dense;
-}
-
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.grid-cols-7 {
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-
-.grid-cols-\[90px_1fr\] {
-  grid-template-columns: 90px 1fr;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.flex-col-reverse {
-  flex-direction: column-reverse;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.flex-wrap-reverse {
-  flex-wrap: wrap-reverse;
-}
-
-.flex-nowrap {
-  flex-wrap: nowrap;
-}
-
-.place-content-center {
-  place-content: center;
-}
-
-.place-content-start {
-  place-content: start;
-}
-
-.place-content-end {
-  place-content: end;
-}
-
-.place-content-between {
-  place-content: space-between;
-}
-
-.place-content-around {
-  place-content: space-around;
-}
-
-.place-content-evenly {
-  place-content: space-evenly;
-}
-
-.place-content-baseline {
-  place-content: baseline;
-}
-
-.place-content-stretch {
-  place-content: stretch;
-}
-
-.place-items-start {
-  place-items: start;
-}
-
-.place-items-end {
-  place-items: end;
-}
-
-.place-items-center {
-  place-items: center;
-}
-
-.place-items-baseline {
-  place-items: baseline;
-}
-
-.place-items-stretch {
-  place-items: stretch;
-}
-
-.content-normal {
-  align-content: normal;
-}
-
-.content-center {
-  align-content: center;
-}
-
-.content-start {
-  align-content: flex-start;
-}
-
-.content-end {
-  align-content: flex-end;
-}
-
-.content-between {
-  align-content: space-between;
-}
-
-.content-around {
-  align-content: space-around;
-}
-
-.content-evenly {
-  align-content: space-evenly;
-}
-
-.content-baseline {
-  align-content: baseline;
-}
-
-.content-stretch {
-  align-content: stretch;
-}
-
-.items-start {
-  align-items: flex-start;
-}
-
-.items-end {
-  align-items: flex-end;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.items-baseline {
-  align-items: baseline;
-}
-
-.items-stretch {
-  align-items: stretch;
-}
-
-.justify-normal {
-  justify-content: normal;
-}
-
-.justify-start {
-  justify-content: flex-start;
-}
-
-.justify-end {
-  justify-content: flex-end;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.justify-around {
-  justify-content: space-around;
-}
-
-.justify-evenly {
-  justify-content: space-evenly;
-}
-
-.justify-stretch {
-  justify-content: stretch;
-}
-
-.justify-items-start {
-  justify-items: start;
-}
-
-.justify-items-end {
-  justify-items: end;
-}
-
-.justify-items-center {
-  justify-items: center;
-}
-
-.justify-items-stretch {
-  justify-items: stretch;
-}
-
-.gap-1 {
-  gap: 0.25rem;
-}
-
-.gap-10 {
-  gap: 2.5rem;
-}
-
-.gap-12 {
-  gap: 3rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
-.gap-3 {
-  gap: 0.75rem;
-}
-
-.gap-4 {
-  gap: 1rem;
-}
-
-.gap-5 {
-  gap: 1.25rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
-}
-
-.gap-8 {
-  gap: 2rem;
-}
-
-.gap-y-1 {
-  row-gap: 0.25rem;
-}
-
-.space-x-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 0;
-  margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-
-.space-y-reverse > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 1;
-}
-
-.space-x-reverse > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-x-reverse: 1;
-}
-
-.divide-x > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-x-reverse: 0;
-  border-right-width: calc(1px * var(--tw-divide-x-reverse));
-  border-left-width: calc(1px * calc(1 - var(--tw-divide-x-reverse)));
-}
-
-.divide-y > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-y-reverse: 0;
-  border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
-  border-bottom-width: calc(1px * var(--tw-divide-y-reverse));
-}
-
-.divide-y-reverse > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-y-reverse: 1;
-}
-
-.divide-x-reverse > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-x-reverse: 1;
-}
-
-.divide-solid > :not([hidden]) ~ :not([hidden]) {
-  border-style: solid;
-}
-
-.divide-dashed > :not([hidden]) ~ :not([hidden]) {
-  border-style: dashed;
-}
-
-.divide-dotted > :not([hidden]) ~ :not([hidden]) {
-  border-style: dotted;
-}
-
-.divide-double > :not([hidden]) ~ :not([hidden]) {
-  border-style: double;
-}
-
-.divide-none > :not([hidden]) ~ :not([hidden]) {
-  border-style: none;
-}
-
-.place-self-auto {
-  place-self: auto;
-}
-
-.place-self-start {
-  place-self: start;
-}
-
-.place-self-end {
-  place-self: end;
-}
-
-.place-self-center {
-  place-self: center;
-}
-
-.place-self-stretch {
-  place-self: stretch;
-}
-
-.self-auto {
-  align-self: auto;
-}
-
-.self-start {
-  align-self: flex-start;
-}
-
-.self-end {
-  align-self: flex-end;
-}
-
-.self-center {
-  align-self: center;
-}
-
-.self-stretch {
-  align-self: stretch;
-}
-
-.self-baseline {
-  align-self: baseline;
-}
-
-.justify-self-auto {
-  justify-self: auto;
-}
-
-.justify-self-start {
-  justify-self: start;
-}
-
-.justify-self-end {
-  justify-self: end;
-}
-
-.justify-self-center {
-  justify-self: center;
-}
-
-.justify-self-stretch {
-  justify-self: stretch;
-}
-
-.overflow-auto {
-  overflow: auto;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-
-.overflow-clip {
-  overflow: clip;
-}
-
-.overflow-visible {
-  overflow: visible;
-}
-
-.overflow-scroll {
-  overflow: scroll;
-}
-
-.overflow-x-auto {
-  overflow-x: auto;
-}
-
-.overflow-y-auto {
-  overflow-y: auto;
-}
-
-.overflow-x-hidden {
-  overflow-x: hidden;
-}
-
-.overflow-y-hidden {
-  overflow-y: hidden;
-}
-
-.overflow-x-clip {
-  overflow-x: clip;
-}
-
-.overflow-y-clip {
-  overflow-y: clip;
-}
-
-.overflow-x-visible {
-  overflow-x: visible;
-}
-
-.overflow-y-visible {
-  overflow-y: visible;
-}
-
-.overflow-x-scroll {
-  overflow-x: scroll;
-}
-
-.overflow-y-scroll {
-  overflow-y: scroll;
-}
-
-.overscroll-auto {
-  overscroll-behavior: auto;
-}
-
-.overscroll-contain {
-  overscroll-behavior: contain;
-}
-
-.overscroll-none {
-  overscroll-behavior: none;
-}
-
-.overscroll-y-auto {
-  overscroll-behavior-y: auto;
-}
-
-.overscroll-y-contain {
-  overscroll-behavior-y: contain;
-}
-
-.overscroll-y-none {
-  overscroll-behavior-y: none;
-}
-
-.overscroll-x-auto {
-  overscroll-behavior-x: auto;
-}
-
-.overscroll-x-contain {
-  overscroll-behavior-x: contain;
-}
-
-.overscroll-x-none {
-  overscroll-behavior-x: none;
-}
-
-.scroll-auto {
-  scroll-behavior: auto;
-}
-
-.scroll-smooth {
-  scroll-behavior: smooth;
-}
-
-.truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.overflow-ellipsis {
-  text-overflow: ellipsis;
-}
-
-.text-ellipsis {
-  text-overflow: ellipsis;
-}
-
-.text-clip {
-  text-overflow: clip;
-}
-
-.hyphens-none {
-  -webkit-hyphens: none;
-          hyphens: none;
-}
-
-.hyphens-manual {
-  -webkit-hyphens: manual;
-          hyphens: manual;
-}
-
-.hyphens-auto {
-  -webkit-hyphens: auto;
-          hyphens: auto;
-}
-
-.whitespace-normal {
-  white-space: normal;
-}
-
-.whitespace-nowrap {
-  white-space: nowrap;
-}
-
-.whitespace-pre {
-  white-space: pre;
-}
-
-.whitespace-pre-line {
-  white-space: pre-line;
-}
-
-.whitespace-pre-wrap {
-  white-space: pre-wrap;
-}
-
-.whitespace-break-spaces {
-  white-space: break-spaces;
-}
-
-.text-wrap {
-  text-wrap: wrap;
-}
-
-.text-nowrap {
-  text-wrap: nowrap;
-}
-
-.text-balance {
-  text-wrap: balance;
-}
-
-.text-pretty {
-  text-wrap: pretty;
-}
-
-.break-normal {
-  overflow-wrap: normal;
-  word-break: normal;
-}
-
-.break-words {
-  overflow-wrap: break-word;
-}
-
-.break-all {
-  word-break: break-all;
-}
-
-.break-keep {
-  word-break: keep-all;
-}
-
-.rounded {
-  border-radius: 0.25rem;
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
-.rounded-3xl {
-  border-radius: 1.5rem;
-}
-
-.rounded-\[30px\] {
-  border-radius: 30px;
-}
-
-.rounded-full {
-  border-radius: 9999px;
-}
-
-.rounded-none {
-  border-radius: 0px;
-}
-
-.rounded-xl {
-  border-radius: 0.75rem;
-}
-
-.rounded-b {
-  border-bottom-right-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-.rounded-e {
-  border-start-end-radius: 0.25rem;
-  border-end-end-radius: 0.25rem;
-}
-
-.rounded-l {
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-
-.rounded-r {
-  border-top-right-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-}
-
-.rounded-s {
-  border-start-start-radius: 0.25rem;
-  border-end-start-radius: 0.25rem;
-}
-
-.rounded-t {
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-}
-
-.rounded-bl {
-  border-bottom-left-radius: 0.25rem;
-}
-
-.rounded-br {
-  border-bottom-right-radius: 0.25rem;
-}
-
-.rounded-ee {
-  border-end-end-radius: 0.25rem;
-}
-
-.rounded-es {
-  border-end-start-radius: 0.25rem;
-}
-
-.rounded-se {
-  border-start-end-radius: 0.25rem;
-}
-
-.rounded-ss {
-  border-start-start-radius: 0.25rem;
-}
-
-.rounded-tl {
-  border-top-left-radius: 0.25rem;
-}
-
-.rounded-tr {
-  border-top-right-radius: 0.25rem;
-}
-
-.border {
-  border-width: 1px;
-}
-
-.border-x {
-  border-left-width: 1px;
-  border-right-width: 1px;
-}
-
-.border-y {
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-}
-
-.border-b {
-  border-bottom-width: 1px;
-}
-
-.border-e {
-  border-inline-end-width: 1px;
-}
-
-.border-l {
-  border-left-width: 1px;
-}
-
-.border-r {
-  border-right-width: 1px;
-}
-
-.border-s {
-  border-inline-start-width: 1px;
-}
-
-.border-t {
-  border-top-width: 1px;
-}
-
-.border-solid {
-  border-style: solid;
-}
-
-.border-dashed {
-  border-style: dashed;
-}
-
-.border-dotted {
-  border-style: dotted;
-}
-
-.border-double {
-  border-style: double;
-}
-
-.border-hidden {
-  border-style: hidden;
-}
-
-.border-none {
-  border-style: none;
-}
-
-.border-border {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 229 229 / var(--tw-border-opacity, 1));
-}
-
-.border-gray-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-}
-
-.border-primary {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 122 0 / var(--tw-border-opacity, 1));
-}
-
-.bg-\[\#F5F5F5\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#FF7A00\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#FFBEAA\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 190 170 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#FFE8AA\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 232 170 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#f0f0f0\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(240 240 240 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[\#fff\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-\[rgb\(255\2c 0\2c 0\)\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 0 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-black {
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-black\/40 {
-  background-color: rgb(0 0 0 / 0.4);
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
-}
-
-.bg-green-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
-}
-
-.bg-primary {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
-.bg-white\/95 {
-  background-color: rgb(255 255 255 / 0.95);
-}
-
-.decoration-slice {
-  -webkit-box-decoration-break: slice;
-          box-decoration-break: slice;
-}
-
-.decoration-clone {
-  -webkit-box-decoration-break: clone;
-          box-decoration-break: clone;
-}
-
-.box-decoration-slice {
-  -webkit-box-decoration-break: slice;
-          box-decoration-break: slice;
-}
-
-.box-decoration-clone {
-  -webkit-box-decoration-break: clone;
-          box-decoration-break: clone;
-}
-
-.bg-fixed {
-  background-attachment: fixed;
-}
-
-.bg-local {
-  background-attachment: local;
-}
-
-.bg-scroll {
-  background-attachment: scroll;
-}
-
-.bg-clip-border {
-  background-clip: border-box;
-}
-
-.bg-clip-padding {
-  background-clip: padding-box;
-}
-
-.bg-clip-content {
-  background-clip: content-box;
-}
-
-.bg-clip-text {
-  -webkit-background-clip: text;
-          background-clip: text;
-}
-
-.bg-repeat {
-  background-repeat: repeat;
-}
-
-.bg-no-repeat {
-  background-repeat: no-repeat;
-}
-
-.bg-repeat-x {
-  background-repeat: repeat-x;
-}
-
-.bg-repeat-y {
-  background-repeat: repeat-y;
-}
-
-.bg-repeat-round {
-  background-repeat: round;
-}
-
-.bg-repeat-space {
-  background-repeat: space;
-}
-
-.bg-origin-border {
-  background-origin: border-box;
-}
-
-.bg-origin-padding {
-  background-origin: padding-box;
-}
-
-.bg-origin-content {
-  background-origin: content-box;
-}
-
-.object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.object-fill {
-  -o-object-fit: fill;
-     object-fit: fill;
-}
-
-.object-none {
-  -o-object-fit: none;
-     object-fit: none;
-}
-
-.object-scale-down {
-  -o-object-fit: scale-down;
-     object-fit: scale-down;
-}
-
-.p-3 {
-  padding: 0.75rem;
-}
-
-.p-4 {
-  padding: 1rem;
-}
-
-.p-6 {
-  padding: 1.5rem;
-}
-
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-}
-
-.px-1\.5 {
-  padding-left: 0.375rem;
-  padding-right: 0.375rem;
-}
-
-.px-10 {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-}
-
-.px-6 {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.py-2 {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.py-6 {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-}
-
-.py-8 {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-.pb-16 {
-  padding-bottom: 4rem;
-}
-
-.pr-2 {
-  padding-right: 0.5rem;
-}
-
-.pr-24 {
-  padding-right: 6rem;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-justify {
-  text-align: justify;
-}
-
-.text-start {
-  text-align: start;
-}
-
-.text-end {
-  text-align: end;
-}
-
-.align-baseline {
-  vertical-align: baseline;
-}
-
-.align-top {
-  vertical-align: top;
-}
-
-.align-middle {
-  vertical-align: middle;
-}
-
-.align-bottom {
-  vertical-align: bottom;
-}
-
-.align-text-top {
-  vertical-align: text-top;
-}
-
-.align-text-bottom {
-  vertical-align: text-bottom;
-}
-
-.align-sub {
-  vertical-align: sub;
-}
-
-.align-super {
-  vertical-align: super;
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
-.text-\[10px\] {
-  font-size: 10px;
-}
-
-.text-\[11px\] {
-  font-size: 11px;
-}
-
-.text-\[12px\] {
-  font-size: 12px;
-}
-
-.text-\[13px\] {
-  font-size: 13px;
-}
-
-.text-\[14px\] {
-  font-size: 14px;
-}
-
-.text-\[15px\] {
-  font-size: 15px;
-}
-
-.text-\[16px\] {
-  font-size: 16px;
-}
-
-.text-\[18px\] {
-  font-size: 18px;
-}
-
-.text-\[20px\] {
-  font-size: 20px;
-}
-
-.text-\[22px\] {
-  font-size: 22px;
-}
-
-.text-\[30px\] {
-  font-size: 30px;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-.font-light {
-  font-weight: 300;
-}
-
-.font-medium {
-  font-weight: 500;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.uppercase {
-  text-transform: uppercase;
-}
-
-.lowercase {
-  text-transform: lowercase;
-}
-
-.capitalize {
-  text-transform: capitalize;
-}
-
-.normal-case {
-  text-transform: none;
-}
-
-.italic {
-  font-style: italic;
-}
-
-.not-italic {
-  font-style: normal;
-}
-
-.normal-nums {
-  font-variant-numeric: normal;
-}
-
-.ordinal {
-  --tw-ordinal: ordinal;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.slashed-zero {
-  --tw-slashed-zero: slashed-zero;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.lining-nums {
-  --tw-numeric-figure: lining-nums;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.oldstyle-nums {
-  --tw-numeric-figure: oldstyle-nums;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.proportional-nums {
-  --tw-numeric-spacing: proportional-nums;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.tabular-nums {
-  --tw-numeric-spacing: tabular-nums;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.diagonal-fractions {
-  --tw-numeric-fraction: diagonal-fractions;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.stacked-fractions {
-  --tw-numeric-fraction: stacked-fractions;
-  font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
-}
-
-.leading-relaxed {
-  line-height: 1.625;
-}
-
-.tracking-widest {
-  letter-spacing: 0.1em;
-}
-
-.text-\[\#336699\]\/\[\.35\] {
-  color: rgb(51 102 153 / .35);
-}
-
-.text-\[\#FF7A00\] {
-  --tw-text-opacity: 1;
-  color: rgb(255 122 0 / var(--tw-text-opacity, 1));
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-.text-black\/60 {
-  color: rgb(0 0 0 / 0.6);
-}
-
-.text-blue-500 {
-  --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity, 1));
-}
-
-.text-gray-500 {
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
-}
-
-.text-gray-600 {
-  --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity, 1));
-}
-
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
-}
-
-.text-gray-800 {
-  --tw-text-opacity: 1;
-  color: rgb(31 41 55 / var(--tw-text-opacity, 1));
-}
-
-.text-primary {
-  --tw-text-opacity: 1;
-  color: rgb(255 122 0 / var(--tw-text-opacity, 1));
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity, 1));
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.underline {
-  text-decoration-line: underline;
-}
-
-.overline {
-  text-decoration-line: overline;
-}
-
-.line-through {
-  text-decoration-line: line-through;
-}
-
-.no-underline {
-  text-decoration-line: none;
-}
-
-.decoration-solid {
-  text-decoration-style: solid;
-}
-
-.decoration-double {
-  text-decoration-style: double;
-}
-
-.decoration-dotted {
-  text-decoration-style: dotted;
-}
-
-.decoration-dashed {
-  text-decoration-style: dashed;
-}
-
-.decoration-wavy {
-  text-decoration-style: wavy;
-}
-
-.antialiased {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.subpixel-antialiased {
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-}
-
-.opacity-50 {
-  opacity: 0.5;
-}
-
-.opacity-80 {
-  opacity: 0.8;
-}
-
-.opacity-95 {
-  opacity: 0.95;
-}
-
-.bg-blend-normal {
-  background-blend-mode: normal;
-}
-
-.bg-blend-multiply {
-  background-blend-mode: multiply;
-}
-
-.bg-blend-screen {
-  background-blend-mode: screen;
-}
-
-.bg-blend-overlay {
-  background-blend-mode: overlay;
-}
-
-.bg-blend-darken {
-  background-blend-mode: darken;
-}
-
-.bg-blend-lighten {
-  background-blend-mode: lighten;
-}
-
-.bg-blend-color-dodge {
-  background-blend-mode: color-dodge;
-}
-
-.bg-blend-color-burn {
-  background-blend-mode: color-burn;
-}
-
-.bg-blend-hard-light {
-  background-blend-mode: hard-light;
-}
-
-.bg-blend-soft-light {
-  background-blend-mode: soft-light;
-}
-
-.bg-blend-difference {
-  background-blend-mode: difference;
-}
-
-.bg-blend-exclusion {
-  background-blend-mode: exclusion;
-}
-
-.bg-blend-hue {
-  background-blend-mode: hue;
-}
-
-.bg-blend-saturation {
-  background-blend-mode: saturation;
-}
-
-.bg-blend-color {
-  background-blend-mode: color;
-}
-
-.bg-blend-luminosity {
-  background-blend-mode: luminosity;
-}
-
-.mix-blend-normal {
-  mix-blend-mode: normal;
-}
-
-.mix-blend-multiply {
-  mix-blend-mode: multiply;
-}
-
-.mix-blend-screen {
-  mix-blend-mode: screen;
-}
-
-.mix-blend-overlay {
-  mix-blend-mode: overlay;
-}
-
-.mix-blend-darken {
-  mix-blend-mode: darken;
-}
-
-.mix-blend-lighten {
-  mix-blend-mode: lighten;
-}
-
-.mix-blend-color-dodge {
-  mix-blend-mode: color-dodge;
-}
-
-.mix-blend-color-burn {
-  mix-blend-mode: color-burn;
-}
-
-.mix-blend-hard-light {
-  mix-blend-mode: hard-light;
-}
-
-.mix-blend-soft-light {
-  mix-blend-mode: soft-light;
-}
-
-.mix-blend-difference {
-  mix-blend-mode: difference;
-}
-
-.mix-blend-exclusion {
-  mix-blend-mode: exclusion;
-}
-
-.mix-blend-hue {
-  mix-blend-mode: hue;
-}
-
-.mix-blend-saturation {
-  mix-blend-mode: saturation;
-}
-
-.mix-blend-color {
-  mix-blend-mode: color;
-}
-
-.mix-blend-luminosity {
-  mix-blend-mode: luminosity;
-}
-
-.mix-blend-plus-darker {
-  mix-blend-mode: plus-darker;
-}
-
-.mix-blend-plus-lighter {
-  mix-blend-mode: plus-lighter;
-}
-
-.\!shadow {
-  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1) !important;
-  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color) !important;
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
-}
-
-.shadow {
-  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-md {
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-xl {
-  --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.outline-none {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.outline {
-  outline-style: solid;
-}
-
-.outline-dashed {
-  outline-style: dashed;
-}
-
-.outline-dotted {
-  outline-style: dotted;
-}
-
-.outline-double {
-  outline-style: double;
-}
-
-.ring {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.ring-inset {
-  --tw-ring-inset: inset;
-}
-
-.blur {
-  --tw-blur: blur(8px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.brightness-0 {
-  --tw-brightness: brightness(0);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow {
-  --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-md {
-  --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.drop-shadow-xl {
-  --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.grayscale {
-  --tw-grayscale: grayscale(100%);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.invert {
-  --tw-invert: invert(100%);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.sepia {
-  --tw-sepia: sepia(100%);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.\!filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow) !important;
-}
-
-.filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.filter-none {
-  filter: none;
-}
-
-.backdrop-blur {
-  --tw-backdrop-blur: blur(8px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-blur-sm {
-  --tw-backdrop-blur: blur(4px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-grayscale {
-  --tw-backdrop-grayscale: grayscale(100%);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-invert {
-  --tw-backdrop-invert: invert(100%);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-sepia {
-  --tw-backdrop-sepia: sepia(100%);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-filter {
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-}
-
-.backdrop-filter-none {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.transition-colors {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.ease-in {
-  transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
-}
-
-.ease-in-out {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ease-out {
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-}
-
-.contain-none {
-  contain: none;
-}
-
-.contain-content {
-  contain: content;
-}
-
-.contain-strict {
-  contain: strict;
-}
-
-.contain-size {
-  --tw-contain-size: size;
-  contain: var(--tw-contain-size) var(--tw-contain-layout) var(--tw-contain-paint) var(--tw-contain-style);
-}
-
-.contain-inline-size {
-  --tw-contain-size: inline-size;
-  contain: var(--tw-contain-size) var(--tw-contain-layout) var(--tw-contain-paint) var(--tw-contain-style);
-}
-
-.contain-layout {
-  --tw-contain-layout: layout;
-  contain: var(--tw-contain-size) var(--tw-contain-layout) var(--tw-contain-paint) var(--tw-contain-style);
-}
-
-.contain-paint {
-  --tw-contain-paint: paint;
-  contain: var(--tw-contain-size) var(--tw-contain-layout) var(--tw-contain-paint) var(--tw-contain-style);
-}
-
-.contain-style {
-  --tw-contain-style: style;
-  contain: var(--tw-contain-size) var(--tw-contain-layout) var(--tw-contain-paint) var(--tw-contain-style);
-}
-
-.content-\[\'this-is-also-valid\]-weirdly-enough\'\] {
-  --tw-content: 'this-is-also-valid]-weirdly-enough';
-  content: var(--tw-content);
-}
-
-.forced-color-adjust-auto {
-  forced-color-adjust: auto;
-}
-
-.forced-color-adjust-none {
-  forced-color-adjust: none;
-}
-
-@font-face {
-  font-family: 'HelveticaNeueW23';
-
-  src: url('../assets/fonts/HelveticaNeue-Reg.woff2') format('woff2');
-
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'HelveticaNeueW23';
-
-  src: url('../assets/fonts/HelveticaNeue-Bd.woff2') format('woff2');
-
-  font-weight: 700;
-}
-
-body {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-  font-family: HelveticaNeueW23, sans-serif;
-  --tw-text-opacity: 1;
-  color: rgb(77 77 77 / var(--tw-text-opacity, 1));
-}
-
-.tab-active {
-  border-radius: 9999px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-}
-
-.tab-inactive {
-  border-radius: 9999px;
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 245 245 / var(--tw-bg-opacity, 1));
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-}
-
-.section-fade {
-  --tw-translate-y: 0.5rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  opacity: 0;
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-}
-
-.section-show {
-  --tw-translate-y: 0px;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  opacity: 1;
-}
-
-.tab-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding-left: 1.75rem;
-  padding-right: 1.75rem;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 500;
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 200ms;
-}
-
-.tab-active {
-  --tw-bg-opacity: 1;
-  background-color: rgb(46 46 46 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.tab-inactive {
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-.timeslot-btn {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-size: 14px;
-  font-weight: 500;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.dropdown-panel {
-  pointer-events: none;
-  position: absolute;
-  z-index: 40;
-  transform-origin: top;
-  --tw-scale-x: .95;
-  --tw-scale-y: .95;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  border-radius: 0.75rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-  padding: 1rem;
-  opacity: 0;
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.dropdown-panel.show {
-  pointer-events: auto;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  opacity: 1;
-}
-
-.qty-btn {
-  display: flex;
-  height: 1.5rem;
-  width: 1.5rem;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.375rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-  font-size: 13px;
-  line-height: 1;
-}
-
-.qty-btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.timeslot-btn {
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  font-size: 14px;
-  font-weight: 500;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 100ms;
-}
-
-.timeslot-btn:active {
-  --tw-scale-x: .95;
-  --tw-scale-y: .95;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.timeslot-active {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity, 1));
-  --tw-ring-offset-width: 2px;
-  --tw-ring-offset-color: #FF7A00;
-}
-
-.time-option {
-  border-radius: 0.375rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity, 1));
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.time-option:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.time-arrow {
-  cursor: pointer;
-  font-size: 14px;
-  line-height: 1;
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity, 1));
-}
-
-.time-arrow:hover {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-[data-time-col] span {
-  font-size: 20px;
-  font-weight: 600;
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-.gallery-item {
-  overflow: hidden;
-  border-radius: 0.75rem;
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.gallery-img {
-  height: 180px;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-  transition-property: transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 300ms;
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-}
-
-.gallery-item:hover .gallery-img {
-  --tw-scale-x: 1.05;
-  --tw-scale-y: 1.05;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.input-field {
-  width: 100%;
-  border-radius: 0.5rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-size: 14px;
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.input-field:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(156 163 175 / var(--tw-border-opacity, 1));
-}
-
-.checkbox {
-  height: 1rem;
-  width: 1rem;
-  accent-color: #FF7A00;
-}
-
-.price-btn {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 14px;
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.price-btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.price-btn-active {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 122 0 / var(--tw-border-opacity, 1));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.toggle-btn {
-  border-radius: 0.5rem;
-  border-width: 1px;
-  --tw-border-opacity: 1;
-  border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 13px;
-}
-
-.toggle-btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.toggle-btn-active {
-  border-radius: 0.5rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.pay-now-btn {
-  border-radius: 0.5rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
-  font-size: 15px;
-  font-weight: 500;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.pay-now-btn:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(227 108 0 / var(--tw-bg-opacity, 1));
-}
-
-/* ====================== MODAL BUTTON UTILITIES ====================== */
-
-.btn-primary {
-  border-radius: 0.75rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.btn-primary:hover {
-  background-color: rgb(255 122 0 / 0.9);
-}
-
-.btn-secondary {
-  border-radius: 0.75rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.btn-secondary:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
-}
-
-/* ====================== MODAL ANIMATIONS ====================== */
-
-/* Fade-in background */
-
-.modal-fade {
-  animation: modalFade 0.25s ease-out forwards;
-}
-
-@keyframes modalFade {
-  from {
-    opacity: 0;
-  }
-
-  to   {
-    opacity: 1;
-  }
-}
-
-/* Popup scale + slide animation */
-
-.modal-popup {
-  animation: modalPopup 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  transform-origin: center;
-}
-
-@keyframes modalPopup {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.94);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@media (min-width: 640px) {
-  .sm\:container {
-    width: 100%;
-  }
-
-  @media (min-width: 640px) {
-    .sm\:container {
-      max-width: 640px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .sm\:container {
-      max-width: 768px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .sm\:container {
-      max-width: 1024px;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .sm\:container {
-      max-width: 1280px;
-    }
-  }
-
-  @media (min-width: 1536px) {
-    .sm\:container {
-      max-width: 1536px;
-    }
-  }
-}
-
-.hover\:border-primary:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 122 0 / var(--tw-border-opacity, 1));
-}
-
-.hover\:bg-gray-100:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-gray-400:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-green-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-primary:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 122 0 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-primary\/90:hover {
-  background-color: rgb(255 122 0 / 0.9);
-}
-
-.hover\:font-bold:hover {
-  font-weight: 700;
-}
-
-.hover\:text-black:hover {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.before\:hover\:text-center:hover::before {
-  content: var(--tw-content);
-  text-align: center;
-}
-
-.hover\:before\:text-center:hover::before {
-  content: var(--tw-content);
-  text-align: center;
-}
-
-.focus\:border-primary:focus {
-  --tw-border-opacity: 1;
-  border-color: rgb(255 122 0 / var(--tw-border-opacity, 1));
-}
-
-.focus\:outline-none:focus {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-}
-
-.focus\:hover\:text-center:hover:focus {
-  text-align: center;
-}
-
-.hover\:focus\:text-center:focus:hover {
-  text-align: center;
-}
-
-@media (min-width: 640px) {
-  .sm\:underline {
-    text-decoration-line: underline;
-  }
-}
-
-@media (min-width: 768px) {
-  .md\:h-\[360px\] {
-    height: 360px;
-  }
-
-  .md\:h-auto {
-    height: auto;
-  }
-
-  .md\:max-h-\[80vh\] {
-    max-height: 80vh;
-  }
-
-  .md\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .md\:grid-cols-\[1fr_120px\] {
-    grid-template-columns: 1fr 120px;
-  }
-
-  .md\:rounded-2xl {
-    border-radius: 1rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:max-h-\[400px\] {
-    max-height: 400px;
-  }
-
-  .lg\:grid-cols-\[1fr_360px\] {
-    grid-template-columns: 1fr 360px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  @media (min-width: 1024px) {
-    .dark\:lg\:hover\:\[paint-order\:markers\]:hover {
-      paint-order: markers;
-    }
-  }
-}
 </file>
 
 <file path="styles/tailwind.css">
@@ -5903,6 +3457,171 @@ module.exports = {
     },
     plugins: [],
 };
+</file>
+
+<file path="js/components/checkout.js">
+import { supLoadPage } from "../router.js";
+import { ReservationState } from "../state.js";
+import { BookingDetailsCard } from "./bookingDetails.js";
+
+export default function CheckoutPage() {
+    const { guests, children, date, time, timeSlot } = ReservationState;
+
+    const formattedDate = new Date(date).toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "short"
+    });
+
+    return `
+    <div class="w-full flex flex-col gap-10 px-6">
+
+      <!-- HEADER -->
+      <div class="flex items-center gap-3 mt-4">
+        <img src="./assets/icons/back.svg" onclick="navigate('reservation')" class="w-7 h-7 cursor-pointer" />
+        <h1 class="text-xl font-semibold">Booking Details</h1>
+      </div>
+
+      <!-- TWO COLUMN LAYOUT -->
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_330px] gap-8">
+
+        <!-- LEFT: Guest Info Form -->
+        <div class="flex flex-col gap-4">
+          <h2 class="text-lg font-semibold">SUSHISAMBA</h2>
+
+          <div class="flex items-center gap-3">
+            <img src="./assets/icons/info-japanese.svg" class="w-4 h-4" /> Japanese
+            <img src="./assets/icons/info-available.svg" class="w-4 h-4" /> Available
+            <img src="./assets/icons/info-formal.svg" class="w-4 h-4" /> Formal
+            <img src="./assets/icons/info-price.svg" class="w-4 h-4" /> $$$
+          </div>
+
+          <!-- INPUTS -->
+          <input class="input-field" placeholder="First name" />
+          <input class="input-field" placeholder="Last name" />
+
+          <div class="flex gap-2">
+            <select class="input-field w-[110px]">
+              <option>+966</option>
+            </select>
+            <input class="input-field flex-1" placeholder="Phone Number" />
+          </div>
+
+          <input class="input-field" placeholder="Email" />
+
+          <!-- PAYMENT SUMMARY -->
+          <div class="mt-4">
+            <h3 class="font-semibold mb-2">Payment Summary</h3>
+
+            <div class="flex justify-between text-[14px] mb-1">
+              <span>Deposit Payment</span>
+              <span>150 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /></span>
+            </div>
+
+            <div class="flex justify-between text-[14px] mb-1">
+              <span>Gift Service Fee (VAT Included)</span>
+              <span>150 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /></span>
+            </div>
+
+            <div class="flex justify-between font-semibold mt-2">
+              <span>Total Payment</span>
+              <span>150 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" /></span>
+            </div>
+          </div>
+
+          <button id="pay-now-btn" class="bg-primary text-white rounded-full py-3 mt-4 shadow">
+            Pay Now
+          </button>
+        </div>
+
+        <!-- RIGHT: Booking Summary -->
+        ${BookingDetailsCard()}
+      </div>
+    </div>
+  `;
+}
+
+// ⏱ Countdown Timer Logic
+export function initCheckoutTimer() {
+    let timeLeft = 180; // seconds (3:00)
+
+    const el = document.getElementById("timer-countdown");
+    if (!el) return;
+
+    function update() {
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
+
+        el.textContent = `${min}:${sec.toString().padStart(2, "0")}`;
+
+        if (timeLeft <= 0) {
+            el.textContent = "Expired";
+            el.classList.add("text-red-500");
+            clearInterval(int);
+            return;
+        }
+
+        timeLeft--;
+    }
+
+    update();
+    const int = setInterval(update, 1000);
+}
+
+// 🔗 Bind data from ReservationState
+export function populateBookingSummary() {
+    const { guests, date, timeSlot } = ReservationState;
+
+    // Format date
+    let formattedDate = "15 Oct"; // default
+    if (date) {
+        const dateObj = new Date(date);
+        formattedDate = dateObj.toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "short"
+        });
+    }
+
+    // Update DOM elements
+    const guestsEl = document.getElementById("summary-guests");
+    const dateEl = document.getElementById("summary-date");
+    const timeEl = document.getElementById("summary-time");
+
+    if (guestsEl) guestsEl.textContent = guests || "2";
+    if (dateEl) dateEl.textContent = formattedDate;
+    if (timeEl) timeEl.textContent = timeSlot || "10:45 PM";
+}
+
+// Initialize checkout page
+export function init() {
+    initCheckoutTimer();
+    populateBookingSummary();
+
+    // Add Pay Now button click handler
+    const payNowBtn = document.getElementById("pay-now-btn");
+    if (payNowBtn) {
+        payNowBtn.addEventListener("click", () => {
+            // Navigate to confirmation page
+            console.log("clicked-button!")
+            supLoadPage('confirmation');
+        });
+    }
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "sushisamba-widget",
+  "version": "1.0.0",
+  "description": "Responsive HTML/CSS/JS project with TailwindCSS",
+  "scripts": {
+    "build:css": "tailwindcss -i ./styles/main-input.css -o ./styles/output.css",
+    "dev:css": "tailwindcss -i ./styles/main-input.css -o ./styles/output.css --watch",
+    "serve": "npx http-server -p 3000 -o"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}
 </file>
 
 </files>

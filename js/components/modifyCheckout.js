@@ -1,17 +1,40 @@
 import { supLoadPage } from "../router.js";
 import { ReservationState } from "../state.js";
-import { BookingDetailsCard } from "./bookingDetails.js";
+import { BookingDetailsComparisonCard } from "./bookingDetailsComparison.js";
 
-export default function CheckoutPage() {
-  const { guests, children, date, time, timeSlot } = ReservationState;
+export default function ModifyCheckoutPage() {
+  // Format date as "15 Oct"
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", { day: "numeric", month: "short" });
+  };
 
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
-    day: "numeric",
-    month: "short",
-  });
+  const oldData = {
+    guests: ReservationState.oldReservation?.guests || 2,
+    date: formatDate(ReservationState.oldReservation?.date),
+    timeSlot: ReservationState.oldReservation?.timeSlot || "N/A",
+    area: "Restaurant",
+    seating: "2 hr"
+  };
 
-  return /*html*/ `
-    <div class="w-full flex flex-col gap-10 px-6">  
+  const newData = {
+    guests: ReservationState.guests || 2,
+    date: formatDate(ReservationState.date),
+    timeSlot: ReservationState.timeSlot || "N/A",
+    area: "Restaurant",
+    seating: "2 hr"
+  };
+
+  return /*html*/`
+    <div class="w-full flex flex-col gap-10 px-6">
+
+      <!-- HEADER -->
+      <div class="flex items-center gap-3 mt-4">
+        <img src="./assets/icons/back.svg" onclick="navigate('modify')" class="w-7 h-7 cursor-pointer  rounded-full border border-gray-400" />
+        <h1 class="text-xl font-semibold">Review Changes</h1>
+      </div>
+
       <!-- TWO COLUMN LAYOUT -->
       <div class="grid grid-cols-1 md:grid-cols-[1fr_330px] gap-8">
 
@@ -19,14 +42,14 @@ export default function CheckoutPage() {
         <div class="flex flex-col gap-4">
           <h2 class="text-lg font-semibold">SUSHISAMBA</h2>
 
-          <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex flex-wrap items-center gap-3">
             <img src="./assets/icons/info-japanese.svg" class="w-4 h-4" /> Japanese
             <img src="./assets/icons/info-available.svg" class="w-4 h-4" /> Available
             <img src="./assets/icons/info-formal.svg" class="w-4 h-4" /> Formal
             <img src="./assets/icons/info-price.svg" class="w-4 h-4" /> $$$
           </div>
 
-          <!-- INPUTS -->
+          <!-- INPUTS (same as checkout) -->
           <input id="fname" class="input-field" placeholder="First name" />
           <input id="lname" class="input-field" placeholder="Last name" />
 
@@ -39,7 +62,7 @@ export default function CheckoutPage() {
 
           <input id="email" class="input-field" placeholder="Email" />
 
-         <!-- PAYMENT SUMMARY -->
+            <!-- PAYMENT SUMMARY -->
         <div class="mt-6 bg-white rounded-2xl p-4 shadow-sm">
           <h3 class="font-semibold text-lg mb-4">
             Payment Summary
@@ -75,40 +98,40 @@ export default function CheckoutPage() {
     </div>
 
 
-    <!-- PAYMENT OPTIONS -->
-    <div class="flex flex-col gap-4" id="payment-select">
+        <!-- PAYMENT OPTIONS -->
+        <div class="flex flex-col gap-4" id="payment-select">
 
-      <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" name="payment" value="apple" />
-        <img src="./assets/icons/applePay.svg" class="h-6" />
-      </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="payment" value="apple" />
+            <img src="./assets/icons/applePay.svg" class="h-6" />
+          </label>
 
-      <label class="flex items-center gap-2 cursor-pointer">
-        <input type="radio" name="payment" value="cards" />
-        <img src="./assets/icons/mada_visa_masterCard.svg" class="h-5" />
-      </label>
-
-    </div>
-
-
-    <!-- PAY BUTTON -->
-    <div class="flex justify-center mt-4">
-      <button id="pay-btn" class="pay-now-btn opacity-50 cursor-not-allowed">
-        Pay now
-      </button>
-    </div>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="payment" value="cards" />
+            <img src="./assets/icons/mada_visa_masterCard.svg" class="h-5" />
+          </label>
 
         </div>
 
-        <!-- RIGHT: Booking Summary -->
-        ${BookingDetailsCard()}
+
+        <!-- PAY BUTTON -->
+        <div class="flex justify-center mt-4">
+          <button id="pay-btn" class="pay-now-btn opacity-50 cursor-not-allowed">
+            Pay now
+          </button>
+        </div>
+        </div>
+
+        <!-- RIGHT: Booking Details Comparison -->
+        ${BookingDetailsComparisonCard(oldData, newData)}
       </div>
     </div>
   `;
 }
 
-// ⏱ Countdown Timer Logic
-export function initCheckoutTimer() {
+// ---------------- Timer Logic (same as checkout) ----------------
+
+export function initModifyCheckoutTimer() {
   let timeLeft = 180; // seconds (3:00)
 
   const el = document.getElementById("timer-countdown");
@@ -134,34 +157,10 @@ export function initCheckoutTimer() {
   const int = setInterval(update, 1000);
 }
 
-// 🔗 Bind data from ReservationState
-export function populateBookingSummary() {
-  const { guests, date, timeSlot } = ReservationState;
+// ---------------- Bind + Buttons ----------------
 
-  // Format date
-  let formattedDate = "15 Oct"; // default
-  if (date) {
-    const dateObj = new Date(date);
-    formattedDate = dateObj.toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "short",
-    });
-  }
-
-  // Update DOM elements
-  const guestsEl = document.getElementById("summary-guests");
-  const dateEl = document.getElementById("summary-date");
-  const timeEl = document.getElementById("summary-time");
-
-  if (guestsEl) guestsEl.textContent = guests || "2";
-  if (dateEl) dateEl.textContent = formattedDate;
-  if (timeEl) timeEl.textContent = timeSlot || "10:45 PM";
-}
-
-// Initialize checkout page
 export function init() {
-  initCheckoutTimer();
-  populateBookingSummary();
+  initModifyCheckoutTimer();
   setupValidation();
 }
 
@@ -221,11 +220,12 @@ function setupValidation() {
     el.addEventListener("change", validate);
   });
 
-  // Add Pay Now button click handler
+  // Confirm Change
   if (payBtn) {
     payBtn.addEventListener("click", () => {
       if (!payBtn.classList.contains("cursor-not-allowed")) {
-        supLoadPage("confirmation");
+        // Navigate to confirmation page with NEW data
+        supLoadPage('confirmation');
       }
     });
   }

@@ -18,6 +18,10 @@ export function openModal(type) {
 
   // Load content based on type
   switch (type) {
+    case "usagePolicy":
+      content.innerHTML = usagePolicyContent();
+      break;
+
     case "paymentPolicy":
       content.innerHTML = paymentPolicyContent();
       break;
@@ -55,7 +59,7 @@ export function openModal(type) {
       break;
 
     default:
-      content.innerHTML = `<p>Unknown popup: ${type}</p>`;
+      content.innerHTML = /*html*/`<p>Unknown popup: ${type}</p>`;
   }
 }
 
@@ -89,10 +93,24 @@ if (typeof document !== "undefined") {
 // ====================== MODAL CONTENT TEMPLATES ======================
 
 /**
+ * Usage Policy popup content
+ */
+function usagePolicyContent() {
+  return /*html*/`
+    <h2 class="text-[20px] font-semibold text-primary mb-4">Usage Policy</h2>
+    <p class="text-[15px] text-gray-700 leading-relaxed">
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+      sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+      Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit.
+    </p>
+  `;
+}
+
+/**
  * Payment Policy popup content
  */
 function paymentPolicyContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[20px] font-semibold text-primary mb-4">Payment Policy</h2>
     <p class="text-[15px] text-gray-700 leading-relaxed">
       Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
@@ -106,7 +124,7 @@ function paymentPolicyContent() {
  * Review popup content with rating system and photo upload
  */
 function reviewPopupContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[20px] font-semibold mb-4">Review</h2>
 
     ${ratingRow("Food")}
@@ -136,7 +154,7 @@ function reviewPopupContent() {
  * Helper function to create a rating row
  */
 function ratingRow(label) {
-  return `
+  return /*html*/`
     <div class="flex items-center gap-4 my-2">
       <span class="w-[80px] text-[15px]">${label}</span>
       <div class="flex gap-1 text-[22px] text-primary cursor-pointer">
@@ -150,7 +168,7 @@ function ratingRow(label) {
  * Day unavailable popup content
  */
 function dayUnavailableContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-medium mb-4">
       Today is unavailable. Would you like to find the nearest available day?
     </h2>
@@ -170,7 +188,7 @@ function dayUnavailableContent() {
  * Waitlist popup content
  */
 function waitlistContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-medium mb-4">Booking to waitlist</h2>
 
     <p class="text-[14px] text-gray-700 leading-relaxed">
@@ -189,7 +207,7 @@ function waitlistContent() {
  * Report popup content
  */
 function reportContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[20px] font-semibold mb-4">Report</h2>
 
     <textarea class="input-field w-full h-[120px] border border-border rounded-xl p-3 focus:outline-none focus:border-primary"
@@ -203,7 +221,7 @@ function reportContent() {
  * Confirm reservation popup content
  */
 function confirmReservationContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-semibold text-primary mb-2">
       By confirming this reservation, I acknowledge that I have read and accepted the Special Notes
     </h2>
@@ -226,7 +244,7 @@ function confirmReservationContent() {
  * Login account popup content
  */
 function loginPopupContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-semibold mb-1">Login Account</h2>
     <p class="text-[14px] text-gray-500 mb-4">
       Please enter your phone number to proceed with updating your reservation
@@ -249,7 +267,7 @@ function loginPopupContent() {
  * Notify availability popup content
  */
 function notifyPopupContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-semibold mb-1">Notify Availability</h2>
     <p class="text-[13px] text-gray-500 mb-4">
       We'll notify you when times matching your choices become available.
@@ -319,7 +337,7 @@ function notifyPopupContent() {
  * Special notes confirmation popup content (full version)
  */
 function specialNotesPopupContent() {
-  return `
+  return /*html*/`
     <h2 class="text-[18px] font-semibold text-primary mb-2">Special Notes</h2>
 
     <p class="text-[15px] text-gray-700 leading-relaxed mb-4">

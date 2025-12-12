@@ -1,12 +1,12 @@
 @font-face {
-  font-family: 'HelveticaNeueW23';
-  src: url('../assets/fonts/HelveticaNeue-Reg.woff2') format('woff2');
+  font-family: "HelveticaNeueW23";
+  src: url("../assets/fonts/HelveticaNeue-Reg.woff2") format("woff2");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'HelveticaNeueW23';
-  src: url('../assets/fonts/HelveticaNeue-Bd.woff2') format('woff2');
+  font-family: "HelveticaNeueW23";
+  src: url("../assets/fonts/HelveticaNeue-Bd.woff2") format("woff2");
   font-weight: 700;
 }
 
@@ -45,9 +45,8 @@ body {
 }
 
 .timeslot-btn {
-  @apply bg-[#FF7A00] text-white text-[14px] font-medium px-6 py-2 rounded-md shadow-sm;
+  @apply bg-primary hover:bg-primary/90 text-white text-[14px] font-medium px-6 py-2 rounded-md shadow-sm;
 }
-
 .dropdown-panel {
   @apply absolute z-40 bg-white rounded-xl shadow-lg border border-gray-200 
          p-4 opacity-0 scale-95 pointer-events-none origin-top 
@@ -98,7 +97,11 @@ body {
 }
 
 .input-field {
-  @apply border border-gray-300 rounded-lg px-4 py-3 text-[14px] w-full outline-none focus:border-gray-400;
+  @apply border border-gray-300 rounded-lg px-4 py-3 text-[14px] w-full outline-none focus:border-gray-400 transition-colors duration-200;
+}
+
+.input-error {
+  @apply border-red-500 focus:border-red-500 bg-red-50;
 }
 
 .checkbox {
@@ -143,8 +146,12 @@ body {
 }
 
 @keyframes modalFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Popup scale + slide animation */
@@ -171,7 +178,6 @@ body {
 
 .booking-icon {
   @apply w-7 h-7 mb-1;
-  filter: invert(48%) sepia(85%) saturate(700%) hue-rotate(130deg);
 }
 
 .booking-label {

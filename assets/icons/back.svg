@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 386 386" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
-    <g transform="matrix(1,0,0,1,-157833.936633,-54037.364679)">
-        <g transform="matrix(8.333333,0,0,8.333333,156156.9283,52649.150512)">
-            <g transform="matrix(0,-1,-1,0,224.375,166.5857)">
-                <path d="M-23.134,-23.134C-35.911,-23.134 -46.268,-12.776 -46.268,0C-46.268,12.777 -35.911,23.134 -23.134,23.134C-10.357,23.134 0,12.777 0,0C0,-12.776 -10.357,-23.134 -23.134,-23.134" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+<svg width="100%" height="100%" viewBox="0 0 631 335" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:10;">
+    <g transform="matrix(1,0,0,1,-110604.381484,-55098.543471)">
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(-1,0,0,1,240.9824,237.4592)">
+                <path d="M-35.484,0L0,0" style="fill:none;fill-rule:nonzero;stroke:rgb(255,108,0);stroke-width:4px;"/>
             </g>
         </g>
-        <g transform="matrix(8.333333,0,0,8.333333,156156.9283,52649.150512)">
-            <text x="216.122px" y="193.264px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:38.408px;fill:white;">ع</text>
+        <g transform="matrix(8.333333,0,0,8.333333,108763.692744,53287.214731)">
+            <g transform="matrix(1,0,0,1,256.092,256.1046)">
+                <path d="M0,-37.295L3.11,-33.955L-13.359,-18.65L3.11,-3.34L0,0L-20.055,-18.65L0,-37.295Z" style="fill:rgb(255,108,0);fill-rule:nonzero;"/>
+            </g>
         </g>
     </g>
 </svg>

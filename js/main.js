@@ -1,5 +1,5 @@
 // js/main.js
-import { loadPage } from "./router.js";
+import { loadPage, supLoadPage } from "./router.js";
 import { openModal, closeModal } from "./components/modal.js";
 import { ReservationState, updateState } from "./state.js";
 
@@ -46,6 +46,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Start with reservation page
     loadPage("reservation");
+
+    // Handle browser back/forward
+    window.addEventListener("popstate", (event) => {
+        if (event.state) {
+            const { page, type } = event.state;
+            if (type === 'sub') {
+                supLoadPage(page, false);
+            } else {
+                loadPage(page, false);
+            }
+        } else {
+            // Default to reservation if no state (e.g. initial load popped)
+            loadPage("reservation", false);
+        }
+    });
 
     // Set up global handlers
     initModalTriggers();

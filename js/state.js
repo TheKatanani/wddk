@@ -12,6 +12,9 @@ export const ReservationState = {
     area: null,      // terrace / dining room / lounge
     specialNotesAccepted: false,
 
+    // Store original values when modifying a booking
+    oldReservation: null,
+
     contact: {
         fname: "",
         lname: "",
@@ -30,4 +33,21 @@ export function updateState(key, value) {
 export function updateContact(key, value) {
     ReservationState.contact[key] = value;
     console.log("ReservationState updated:", ReservationState);
+}
+
+// Save current reservation as old reservation for modification comparison
+export function saveAsOldReservation() {
+    ReservationState.oldReservation = {
+        guests: ReservationState.guests,
+        children: ReservationState.children,
+        date: ReservationState.date,
+        time: ReservationState.time,
+        timeSlot: ReservationState.timeSlot
+    };
+    console.log("Old reservation saved:", ReservationState.oldReservation);
+}
+
+// Clear old reservation after modification is complete
+export function clearOldReservation() {
+    ReservationState.oldReservation = null;
 }

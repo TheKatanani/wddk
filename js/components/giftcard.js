@@ -1,5 +1,5 @@
 export default function GiftCard() {
-  return `
+  return /*html*/`
   <div class="w-full flex flex-col gap-10 pr-24">
   
     <!-- CARD + PRICE -->
@@ -57,8 +57,8 @@ export default function GiftCard() {
 
     <!-- Price -->
     <div id="card-price-label"
-         class="absolute bottom-7 right-10 text-white text-[30px] font-semibold drop-shadow-xl">
-      500 ريال
+         class="absolute bottom-7 right-10 text-white text-[30px] font-semibold drop-shadow-xl flex flex-row-reverse items-center gap-2">
+      500 <img src="./assets/icons/ryal.svg" class="inline h-8 mb-1" />
     </div>
   </div>
 </div>
@@ -124,12 +124,12 @@ export default function GiftCard() {
     <div class="flex flex-col gap-3 mt-3 text-[14px] text-gray-700">
       <label class="flex items-center gap-2">
         <input id="policy1" type="checkbox" class="checkbox">
-        <span>Accept Usage Policy</span>
+        <span class="text-primary underline cursor-pointer" data-modal="usagePolicy">Accept Usage Policy</span> 
       </label>
 
       <label class="flex items-center gap-2">
         <input id="policy2" type="checkbox" class="checkbox">
-        <span>Accept Payment Policy</span>
+        <span class="text-primary underline cursor-pointer" data-modal="paymentPolicy">Accept Payment Policy</span> 
       </label>
     </div>
 
@@ -152,7 +152,8 @@ export default function GiftCard() {
 
     <!-- PAY BUTTON -->
     <div class="flex justify-center mt-4">
-      <button id="pay-btn" class="pay-now-btn opacity-50 cursor-not-allowed">
+      <!-- <button id="pay-btn" class="pay-now-btn opacity-50 cursor-not-allowed"> -->
+      <button id="pay-btn" class="pay-now-btn">
         Pay now
       </button>
     </div>
@@ -164,18 +165,18 @@ export default function GiftCard() {
 /* ---------- HTML HELPERS ---------- */
 
 function priceButton(amount, active = false) {
-  return `
+  return /*html*/`
     <button
-      class="price-btn ${active ? "price-btn-active" : ""}"
+      class="price-btn ${active ? "price-btn-active" : ""} flex items-center justify-center gap-1"
       data-amount="${amount}"
     >
-      ﷼ ${amount}
+      <img src="./assets/icons/ryal.svg" class="w-3" /> ${amount}
     </button>
   `;
 }
 
 function customButton() {
-  return `
+  return /*html*/`
     <button class="price-btn" data-custom="true">Custom</button>
   `;
 }
@@ -209,10 +210,10 @@ function setupPriceSelector() {
       if (isCustom) {
         customInput.classList.remove("hidden");
         customInput.focus();
-        cardLabel.textContent = "﷼ --";
+        cardLabel.innerHTML = "<img src='./assets/icons/ryal.svg' class='inline h-8 mb-1' /> --";
       } else {
         customInput.classList.add("hidden");
-        cardLabel.textContent = `﷼ ${amount}`;
+        cardLabel.innerHTML = `${amount} <img src='./assets/icons/ryal.svg' class='inline h-8 mb-1' />`;
       }
     });
   });
@@ -220,7 +221,7 @@ function setupPriceSelector() {
   // When typing custom price update card
   customInput.addEventListener("input", () => {
     const val = customInput.value || "--";
-    cardLabel.textContent = `﷼ ${val}`;
+    cardLabel.innerHTML = `${val} <img src='./assets/icons/ryal.svg' class='inline h-8 mb-1' />`;
   });
 }
 
@@ -261,21 +262,48 @@ function setupValidation() {
   const payBtn = document.getElementById("pay-btn");
 
   function validate() {
-    const fieldsOK = requiredFields.every(f => f.value.trim() !== "");
+    // Check fields and apply error styling if empty and previously touched/submitted
+    let allValid = true;
+
+    requiredFields.forEach(field => {
+      const isValid = field.value.trim() !== "";
+      if (!isValid) allValid = false;
+
+      // Only show error if user has interacted (blur) or we could add a submitted flag
+      // For now, let's keep it simple: Real-time validation visual feedback
+      // We can add a 'touched' listener or just toggle validation classes
+      if (field.value.trim() === "" && field.classList.contains("touched")) {
+        field.classList.add("input-error");
+      } else {
+        field.classList.remove("input-error");
+      }
+    });
+
     const policiesOK = policy1.checked && policy2.checked;
     const paymentOK = [...paymentRadios].some(r => r.checked);
 
-    const canPay = fieldsOK && policiesOK && paymentOK;
+    const canPay = allValid && policiesOK && paymentOK;
 
     if (canPay) {
       payBtn.classList.remove("opacity-50", "cursor-not-allowed");
     } else {
       payBtn.classList.add("opacity-50", "cursor-not-allowed");
     }
+
+    return canPay;
   }
 
-  [...requiredFields, policy1, policy2, ...paymentRadios].forEach(el => {
+  // Add 'touched' class on blur to trigger visual error
+  requiredFields.forEach(el => {
+    el.addEventListener("blur", () => {
+      el.classList.add("touched");
+      validate();
+    });
+
     el.addEventListener("input", validate);
+  });
+
+  [policy1, policy2, ...paymentRadios].forEach(el => {
     el.addEventListener("change", validate);
   });
 
